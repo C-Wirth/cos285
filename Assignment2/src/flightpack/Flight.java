@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
  * Author: Colby Wirth Version: 12 September 2024 Course: COS 285 Class:
  * Flight.java
  */
-public class Flight {
+public class Flight{
 
     private Airport origin;
 

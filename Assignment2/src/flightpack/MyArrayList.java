@@ -1,10 +1,14 @@
 package flightpack;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class MyArrayList<T extends Comparable<T>>{
+/**
+ * Author: Colby Wirth 
+ * Version: 18 September 2024 
+ * Course: COS 285 
+ * Class : MyArrayList.java
+ */public class MyArrayList<T extends Comparable<T>>{
 
     private T[] elements;
 
@@ -20,18 +24,9 @@ public class MyArrayList<T extends Comparable<T>>{
      */
     public MyArrayList() {
 
-        elements = (T[]) Comparable[DEFAULT_CAPACITY];
+        elements = (T[]) new Comparable[DEFAULT_CAPACITY];
 
     }
-
-    /**
-     *  public void add(T element)
-● public T get(int index)
-● public int size()
-● public void sort()
-● public void sort(Comparator<? super T> comparator)
-● private void ensureCapacity()
-     */
 
      /**
       * Adds an generic element, 'T' to the ArrayList
@@ -61,7 +56,8 @@ public class MyArrayList<T extends Comparable<T>>{
 
      /**
       * This method returns an element at an index specified by parameter 'index'
-      * @param index, the index to find an element at 
+      *
+      * @param index, the place in the MyArrayList to find an element at 
       * @return the generic type at a given index
       * @throws IndexOutOfBoundsException
       *
@@ -84,7 +80,7 @@ public class MyArrayList<T extends Comparable<T>>{
      }
 
      /**
-      * An insertion sort method to organize elements by natural ordering
+      * A sort method that implements insertion sort.  Organizes elements by natural ordering
       */
     public void sort(){
 
@@ -100,9 +96,9 @@ public class MyArrayList<T extends Comparable<T>>{
     }
 
     /**
-     * This is an insertion sort method that sorts based on a Comparator object
+     * This is an insertion sort method by insertion sort with a Comparator object to specify how to sort
      * 
-     * @param comparator
+     * @param comparator the comparator object that implements the sorting algorithm
      */
     public void sort(Comparator<? super T> comparator){
         
@@ -115,7 +111,14 @@ public class MyArrayList<T extends Comparable<T>>{
 
             }        
 
+        }
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args){
     }
     
-    
 }
+
