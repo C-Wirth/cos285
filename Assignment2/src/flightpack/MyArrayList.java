@@ -16,12 +16,14 @@ import java.util.Comparator;
     
     private static final int DEFAULT_CAPACITY = 10;
 
+    @SuppressWarnings("unused")
     private int capacity ;
 
     /**
      * Default constructor for MyArrayList object
      * 
      */
+    @SuppressWarnings("unchecked")
     public MyArrayList() {
 
         elements = (T[]) new Comparable[DEFAULT_CAPACITY];

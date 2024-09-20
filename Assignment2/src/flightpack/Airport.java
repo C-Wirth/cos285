@@ -78,4 +78,15 @@ public class Airport {
     public void setState(String state) {
         this.state = state;
     }
+
+    /**
+     * toString
+     * @return this.airportName the three letter String for an airport
+     */
+    @Override
+    public String toString() {
+        return getAirportName();
+    }
+
+    
 }

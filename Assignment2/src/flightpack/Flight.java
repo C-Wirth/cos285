@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
  * Author: Colby Wirth Version: 12 September 2024 Course: COS 285 Class:
  * Flight.java
  */
-public class Flight{
+public class Flight implements Comparable<Flight>{
 
     private Airport origin;
 
@@ -147,5 +147,26 @@ public class Flight{
      */
     public void setDistance(int distance) {
         this.distance = distance;
+    }
+
+    /**
+     * Compare method used to compare dates for flight's LocalDateTime.  
+     * LocalDateTime objects implement Comparable int, so this method returns that comparison
+     * @param otherFlight
+     * @return -1 if this is greater, 0 is they are equal, 1 if other is greater
+     */
+    public int compareTo(Flight other){
+
+       return this.getFlightDate().compareTo(other.getFlightDate());
+    }
+
+    /**
+     * toString method returns a formatted String representation of a Flight object
+     * @return the key fields represented as a String
+     */
+    public String toString(){
+        return "Origin: " + getOrigin() + " " +
+                "Destination: " + getDestination() + " " +
+                "Date: " + getFlightDate().toString();
     }
 }

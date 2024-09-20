@@ -8,10 +8,43 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Author: Colby Wirth Version: 12 September 2024 Course: COS 285 Class:
- * MyDataReader.java
+ * Author: Colby Wirth 
+ * Version: 19 September 2024 
+ * Course: COS 285 
+ * Class: MyDataReader.java
  */
 public class MyDataReader {
+
+    /**
+     * This method returns a MyArrayList<Flight> object with all Flight's with an originState attribute
+     *       that matches the originState input parameter.
+     * @param flightListPath the String to the csv file to read
+     * @param originState the origin state to find
+     * @return flightsList the MyArrayList<Flight> with an origin that matches originState
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static MyArrayList<Flight> OriginStateFinder(String flightListPath, String originState) throws FileNotFoundException, IOException {
+
+        MyArrayList<Flight> flightList = new MyArrayList<>();
+
+        try (BufferedReader flightDataReader = new BufferedReader(new FileReader(flightListPath))) {
+
+            flightDataReader.readLine();
+
+            String curFlightInfo;
+
+            while ((curFlightInfo = flightDataReader.readLine()) != null) {
+
+                String[] flightElements = curFlightInfo.split(",");
+
+                if(flightElements[2].equals(originState))
+                    flightList.add(flightParser(flightElements));
+            }
+        }
+        return flightList;
+    }
+
 
     /**
      *
