@@ -1,8 +1,10 @@
 package flightpack;
 
 /**
- * Author: Colby Wirth Version: 12 September 2024 Course: COS 285 Class:
- * Airport.java
+ * Author: Colby Wirth 
+ * Version: 21 September 2024 
+ * Course: COS 285 
+ * Class: Airport.java
  */
 public class Airport {
 
@@ -80,7 +82,8 @@ public class Airport {
     }
 
     /**
-     * toString
+     * toString used for debugging purposes
+     * @Override Object class's toString method
      * @return this.airportName the three letter String for an airport
      */
     @Override

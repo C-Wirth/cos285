@@ -3,7 +3,9 @@ package flightpack;
 import java.time.LocalDateTime;
 
 /**
- * Author: Colby Wirth Version: 12 September 2024 Course: COS 285 Class:
+ * Author: Colby Wirth 
+ * Version: 21 September 2024 
+ * Course: COS 285 Class:
  * Flight.java
  */
 public class Flight implements Comparable<Flight>{
@@ -141,9 +143,9 @@ public class Flight implements Comparable<Flight>{
     }
 
     /**
-     * setter method, for the distance field
+     * setter method for the distance field
      *
-     * @paramd distance the distance of a flight, an int
+     * @param distance the distance of a flight, an int
      */
     public void setDistance(int distance) {
         this.distance = distance;
@@ -152,9 +154,11 @@ public class Flight implements Comparable<Flight>{
     /**
      * Compare method used to compare dates for flight's LocalDateTime.  
      * LocalDateTime objects implement Comparable int, so this method returns that comparison
+     * @Override Object class's compareTo method
      * @param otherFlight
-     * @return -1 if this is greater, 0 is they are equal, 1 if other is greater
+     * @return -1 if this is greater, 0 is both are equal, 1 if other is greater
      */
+    @Override
     public int compareTo(Flight other){
 
        return this.getFlightDate().compareTo(other.getFlightDate());
@@ -162,8 +166,11 @@ public class Flight implements Comparable<Flight>{
 
     /**
      * toString method returns a formatted String representation of a Flight object
-     * @return the key fields represented as a String
+     * Used for debugging purposes
+     * @Override Object class's toString method
+     * @return A Flight object's key fields represented as a String
      */
+    @Override
     public String toString(){
         return "Origin: " + getOrigin() + " " +
                 "Destination: " + getDestination() + " " +

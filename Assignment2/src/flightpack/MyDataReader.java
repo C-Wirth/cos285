@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Author: Colby Wirth 
- * Version: 19 September 2024 
+ * Version: 20 September 2024 
  * Course: COS 285 
  * Class: MyDataReader.java
  */

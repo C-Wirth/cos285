@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 /**
  * Author: Colby Wirth 
- * Version: 18 September 2024 
+ * Version: 20 September 2024 
  * Course: COS 285 
  * Class : MyArrayList.java
  */public class MyArrayList<T extends Comparable<T>>{
@@ -21,7 +21,6 @@ import java.util.Comparator;
 
     /**
      * Default constructor for MyArrayList object
-     * 
      */
     @SuppressWarnings("unchecked")
     public MyArrayList() {
@@ -110,17 +109,8 @@ import java.util.Comparator;
                 T temp = elements[j];
                 elements[j] = elements[j-1];
                 elements[j-1] = temp;
-
             }        
-
         }
     }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args){
-    }
-    
 }
 
