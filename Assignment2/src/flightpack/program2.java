@@ -24,39 +24,44 @@ public class program2 {
         String state = args[1];
 
         long startTime = System.currentTimeMillis();
-
         MyArrayList<Flight> flightsForExercise6 = MyDataReader.OriginStateFinder(flightLogPath,state);
         long elapsedTime = System.currentTimeMillis() - startTime;
 
         MyArrayList<Flight> flightsForExercise7 = MyDataReader.OriginStateFinder(flightLogPath,state);
         System.out.println(elapsedTime + " milliseconds to read the file.\n");
 
-        // Exercise 6.a and 6.b 
-        startTime = System.currentTimeMillis();
-        flightsForExercise6.sort();
-        elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println(elapsedTime + "  milliseconds to sort based on DateTime (6.a). \n");
 
-        startTime = System.currentTimeMillis();
-        flightsForExercise6.sort();
-        elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println(elapsedTime + "  milliseconds to sort based on DateTime (6.b).\n");
+        mainHelper(flightsForExercise6, "6.a");
+        mainHelper(flightsForExercise6, "6.b");
 
-        // Exercise 7.a and 7.b
         Comparator<Flight> c = new FlightComparator();
-        startTime = System.currentTimeMillis();
-        flightsForExercise7.sort(c);
-        elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println(elapsedTime + " milliseconds to sort based on origin (7.a).\n");
-
-        startTime = System.currentTimeMillis();
-        flightsForExercise7.sort(c);
-        elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println(elapsedTime + " milliseconds to sort based on origin (7.b)\n");
-
-        for(int i = 0 ; i < flightsForExercise7.size(); i+=1000)
-            System.out.println(flightsForExercise7.get(i).toString());
+        mainHelper(flightsForExercise7, (FlightComparator) c, "7.a");
+        mainHelper(flightsForExercise7, (FlightComparator) c, "7.b");
     }
-    
-}
 
+    /**
+     * mainHelper executes sorting and system timing for exercies 6.a or 6.b.  
+     * More generally it takes a MyArrayList<Flight> object, an exercise name, and performs the insertion sort method 
+     * @param listName the name of a MyArrayList<FLight> object
+     * @param exerciseName what exercise is being performed
+     */
+    public static void mainHelper(MyArrayList<Flight>  listName, String exerciseName){
+        long startTime = System.currentTimeMillis();
+        listName.sort();
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        System.out.println(elapsedTime + "  milliseconds to sort based on DateTime for exercise (" + exerciseName + ")\n");
+    }
+    /**
+     * This method Overloads mainHelper and executes sorting and system timing for exercies 7.a or 7.b.  
+     * More generally it takes a MyArrayList<Flight> object, a FlightComparator object, an exercise name, and performs the insertion sort method 
+     * @param listName the name of a MyArrayList<FLight> object
+     * @param comparator the Comparator object used for comparison between Flight objects
+     * @param exerciseName what exercise is being performed
+     */
+    public static void mainHelper(MyArrayList<Flight>  listName, FlightComparator comparator, String exerciseName){
+        long startTime = System.currentTimeMillis();
+        listName.sort(comparator);
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        System.out.println(elapsedTime + "  milliseconds to sort based on origin for exercise (" + exerciseName + ")\n");
+    }
+}
