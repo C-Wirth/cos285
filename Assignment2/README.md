@@ -1,6 +1,6 @@
 Author: Colby Wirth
 
-Assignment: Assignment2
+Assignment: Assignment 2
 
 Course: COS 285 Data Structures
 
