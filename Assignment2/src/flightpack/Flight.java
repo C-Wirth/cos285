@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 /**
  * Author: Colby Wirth 
  * Version: 21 September 2024 
- * Course: COS 285 Class:
- * Flight.java
+ * Course: COS 285 
+ * Class: Flight.java
  */
 public class Flight implements Comparable<Flight>{
 

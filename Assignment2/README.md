@@ -26,7 +26,7 @@ How to run program:
 
      After compiling ALL classes, run main class with the command: 
           java </path/to/flightpack/program2> <path/to/flights.csv> <two letter state code> 
-          ie: java flightpack/program2 ../flights.csv ME
+          ie: java flightpack/program2 flights.csv ME
 
 About: 
      This program runs the main class called program2 and produces the following information from flights.csv with a given state parameter:

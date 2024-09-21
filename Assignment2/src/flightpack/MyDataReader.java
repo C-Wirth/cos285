@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Author: Colby Wirth 
- * Version: 20 September 2024 
+ * Version: 21 September 2024 
  * Course: COS 285 
  * Class: MyDataReader.java
  */
@@ -47,7 +47,8 @@ public class MyDataReader {
 
 
     /**
-     *
+     *flightReader reads a file and creates a Flight[] with all elements
+     * 
      * @param flightListPath String the path to the file log
      * @param numFlights the number to tnitiate the Array to
      * @return Flight[] an Array of Flight objects

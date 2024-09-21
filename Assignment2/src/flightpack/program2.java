@@ -4,8 +4,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Comparator;
 
+/**
+ * Author: Colby Wirth 
+ * Version: 21 September 2024 
+ * Course: COS 285 
+ * Class: program2.java
+ */
 public class program2 {
 
+    /**
+     * main method runs flightpack program
+     * @param args should be <flights.csv> <ME>
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public static void main(String[] args) throws FileNotFoundException, IOException{
         
         String flightLogPath = args[0];
