@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- * Author: Colby Wirth 
+ * Author: Colby Wirth edit made here
  * Version: 21 September 2024 
  * Course: COS 285 
  * Class : MyArrayList.java
