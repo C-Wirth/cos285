@@ -13,8 +13,6 @@ public class MyLinkedList<Flight extends Comparable> implements Iterable<Flight>
      * Default contructor **FINISH
      */
     public MyLinkedList(){
-
-
     }
 
     /**
@@ -23,16 +21,14 @@ public class MyLinkedList<Flight extends Comparable> implements Iterable<Flight>
     public class Node{
         Node next;
         Flight flight;
-        Flight nextFlight;
         /**
          * Constructor for a Node ** Finish
          * @param next
          * @param nextFlight
          */
-        public Node(Node next, Flight flight, Flight nextFlight){
+        public Node(Node next, Flight flight){
             this.next = next;
             this.flight = flight;
-            this.nextFlight = nextFlight;
             add(this);
             size++;
         }
@@ -51,9 +47,20 @@ public class MyLinkedList<Flight extends Comparable> implements Iterable<Flight>
 
         current = head;
 
-        while(current != null && FlightCompareByDate.compare(newNode.flight, current.flight) > -1){
+        FlightCompareByDate<Flight> c = new FlightCompareByDate();
+
+        while(current.next != null){
+
+            if(c.compare(newNode.flight, current.next.flight) < 0){ //if newNode is 'smaller' than current.next
+                
+                newNode.next = current.next;
+                current.next = newNode;
+                return;
+            }
             current = current.next;
         }
+        current.next = newNode;
+        newNode.next = null;
     }
 
     public class FlightCompareByDate implements Comparator<Flight>{
@@ -66,9 +73,9 @@ public class MyLinkedList<Flight extends Comparable> implements Iterable<Flight>
         */
         @Override
         public int compare(Flight f1, Flight f2) {
-            return f1.getFlightDate().compareTo(f1.getFlightDate());
+            return f1.getFlightDate().compareTo(f2.getFlightDate());
+        
         }
-    }
     }
 
 
