@@ -21,7 +21,7 @@ public class MyLinkedList{
      */
     public MyLinkedList(){
         size = 0;
-        head = null;
+        head = new Node(null);
     }
 
     /**
@@ -60,76 +60,63 @@ public class MyLinkedList{
     public void add(Node newNode){
 
         size++;
-        if (getSize()  ==  1){
-            head = newNode;
-            return;
-        }
+        
+        FlightCompareByDate c = new FlightCompareByDate();
         Node current = head;
 
-        Node lastOriginInstance = (current.data.getOrigin().equals(newNode.data.getOrigin())) ? current : null;
-            // originOrganizer(lastOriginInstance, newNode);
-
-        if (!swapChecker(newNode, head)){
-
-             while(current.next != null && !swapChecker(newNode, current.next)){
-                lastOriginInstance = (current.next.data.getOrigin().equals(newNode.data.getOrigin())) ? current.next : lastOriginInstance;
-                current = current.next;
-             }
-
-        current.next = newNode;
+        while(current.next!=null && !newFlightOrderer(newNode, current, c)){
+            current = current.next;
         }
-        originOrganizer(lastOriginInstance, newNode);
+
+        newNode.next = current.next;
+        current.next = newNode;
+        
+        if (size > 1) 
+            flightOriginFixer(newNode);
     }
 
-        /**
-         * SWAP AIRPORT REFERENCES 
-         * @param lastOriginInstance
-         * @param newNode
-         */
-        private void originOrganizer(Node lastOriginInstance, Node newNode){
+        //add the current flight to the LL in order
+        private boolean newFlightOrderer(Node newNode, Node current, FlightCompareByDate c){
 
-            Node current = newNode.next;
-
-            if(lastOriginInstance == null){
-                while(current != null){
-                    if(current.data.getOrigin().equals(newNode.data.getOrigin())){
-                        newNode.nextAirport=current;
-                        return;
-                    }
-                    current = current.next;
-                }
-            }
-            else if(lastOriginInstance.nextAirport == null){
-                lastOriginInstance.nextAirport = newNode;
-            }
-            else if(head.equals(newNode)){
-                head.nextAirport=lastOriginInstance;
-            }
-
-            else{
-                newNode.nextAirport = lastOriginInstance.nextAirport;
-                lastOriginInstance.nextAirport = newNode;
-            }
-        }
-
-        /**
-         * 
-         * @param current
-         * @param newNode
-         * @return 
-         */
-        private boolean swapChecker(Node newNode, Node current){
-            FlightCompareByDate c = new FlightCompareByDate();
-
-            if(c.compare(newNode.data, current.data) < 0){
-                newNode.next = current;
-                head = newNode;
+            if(current.next == null){
+                current.next = newNode;
                 return true;
             }
 
-            return false;
-
+        return c.compare(newNode.data, current.next.data) < 0; //newNode is < current.next
         }
+
+        /**
+         * This method inserts the newNode into its respective getAirportName chain
+         * @param newNode the new Node to be added
+         */
+        private void flightOriginFixer(Node newNode){
+
+            Node current = head.next;
+            Node lastOrigin = null;
+
+
+            while(current != null && current != newNode){
+                if(current.data.getOrigin().getAirportName().equals(newNode.data.getOrigin().getAirportName())){
+                    lastOrigin = current;
+                }
+                current = current.next;
+            }
+            if(lastOrigin != null){
+                newNode.nextAirport = lastOrigin.nextAirport;
+                lastOrigin.nextAirport = newNode;
+                return;
+            }
+            
+
+            while(current != null && !(current.data.getOrigin().getAirportName().equals(newNode.data.getOrigin().getAirportName()))){
+                current = current.next;
+            }
+            if(current != null && current != newNode){
+                newNode.nextAirport = current;
+            }                
+        }
+        
 
     public class FlightCompareByDate implements Comparator<Flight>{
      

@@ -32,6 +32,7 @@ public class test {
 
     MyLinkedList.Node node1 = new MyLinkedList.Node(f1);
     myList.add(node1);
+
     MyLinkedList.Node node2 = new MyLinkedList.Node(f2);
     myList.add(node2);
 
@@ -40,11 +41,5 @@ public class test {
 
     MyLinkedList.Node node0 = new MyLinkedList.Node(f0);
     myList.add(node0);
-
-
-    
-    // MyLinkedList.Node node3 = new MyLinkedList.Node(f3);
-
-
     }
 }
