@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Author: Colby Wirth 
- * Version: 29 September 2024 
+ * Version: 30 September 2024 
  * Course: COS 285 
  * Class: MyLinkedList.java
  */
@@ -25,7 +25,7 @@ public class MyLinkedList{
     }
 
     /**
-     * Node Class **Finish
+     * Node Class a static class within MyLinkedList
      */
     public static class Node{
         Node next;
@@ -34,10 +34,9 @@ public class MyLinkedList{
 
         /**
          * Constructor for a Node
-         * @param next
-         * @param nextFlight
+         * @param next the next element in the MyLinkedList
+         * @param nextFlight the next Node with the same Origin-Flight attribue
          */
-        // public Node(Node next, Flight data, Node nextAirport){
         public Node(Flight data){
             this.next = null;
             this.nextAirport = null;
@@ -55,6 +54,7 @@ public class MyLinkedList{
 
     /**
      * Add method used to appends a node to an ordered MyLinkedList object
+     * Nodes are ordered by LocalDateTime-Flight attribute
      * @param newNode a Node with Flight datatype
      */
     public void add(Node newNode){
@@ -75,7 +75,13 @@ public class MyLinkedList{
             flightOriginFixer(newNode);
     }
 
-        //add the current flight to the LL in order
+       /**
+        * helper method that hanldes the logic for adding the newNode in order to the MyLinkedList
+        * @param newNode the new Node being added
+        * @param current the Node being compared with the newNode by the comparator
+        * @param c FlightCompareByDate orders by LocalDateTime object
+        * @return True if newNode is to be inserted | False if more iterations need to be done
+        */
         private boolean newFlightOrderer(Node newNode, Node current, FlightCompareByDate c){
 
             if(current.next == null){
@@ -88,13 +94,12 @@ public class MyLinkedList{
 
         /**
          * This method inserts the newNode into its respective getAirportName chain
-         * @param newNode the new Node to be added
+         * @param newNode the new Node to be appeneded
          */
         private void flightOriginFixer(Node newNode){
 
             Node current = head.next;
             Node lastOrigin = null;
-
 
             while(current != null && current != newNode){
                 if(current.data.getOrigin().getAirportName().equals(newNode.data.getOrigin().getAirportName())){
@@ -107,7 +112,6 @@ public class MyLinkedList{
                 lastOrigin.nextAirport = newNode;
                 return;
             }
-            
 
             while(current != null && !(current.data.getOrigin().getAirportName().equals(newNode.data.getOrigin().getAirportName()))){
                 current = current.next;
@@ -117,11 +121,14 @@ public class MyLinkedList{
             }                
         }
         
-
+        /**
+         * Compares two Node's FlightDate attributes (LocalDateTime object)
+         * @implements Comparator - Compares Flight objects
+         */
     public class FlightCompareByDate implements Comparator<Flight>{
      
         /**
-        * compare method compares two Flight object's DateTime
+        * compare method compares two Flight object's DateTime attributes
         * 
         * @Override Comparator's compare method
         * @return utilize java's String's compareTo method to compare a Flight's origin AirportName field
@@ -133,72 +140,79 @@ public class MyLinkedList{
     }
 
     /**
-     * 
-     * @param airport
-     * @param start
-     * @param end
-     * @return
+     * Builds a new MyItr objected
+     * @param airport the airports to iterate through
+     * @param start the beginning LocalDateTime begin iteration
+     * @param end the last LocalDateTime to finish iterating at
+     * @return a MyItr iterator ready to iterate
      */
    public Iterator<Flight> iterator(String airport, LocalDateTime start, LocalDateTime end){
         return new MyItr(airport, start, end);
    }
 
    /**
-    * 
+    * A class that returns an Iterator for a MyLinkedList object
+    @implements Iterator iterates through Flight objects
     */
    private class MyItr implements Iterator<Flight>{        
         
-        Node current = null;
         LocalDateTime end;
+        Node current = null;
 
 
         /**
-         * Constructor -- finish
          * 
-         * @param airport
-         * @param start
-         * @param end
-         */
+         * Constructor for a MyItr
+         * @param start the beginning LocalDateTime begin iteration
+         * @param airport the airports to iterate through
+        * @param end the last LocalDateTime to finish iterating at
+        * @return a MyItr iterator ready to iterate
+        */
         public MyItr(String airport, LocalDateTime start, LocalDateTime end) {
             
             this.end = end;
-            current.next=head;
-        
-            while(this.hasNext() && !current.data.getOrigin().getAirportName().equals(airport)){
-                current = current.next;
+
+            Node tempNode = head.next;
+
+            while (tempNode != null) {
+
+                if (tempNode.data.getOrigin().getAirportName().equals(airport) 
+                    && tempNode.data.getFlightDate().compareTo(start) >= 0) {
+                    current = tempNode;
+                    break;
+                }
+                tempNode = tempNode.next;
             }
         }
 
 
-    /**
-     * Checks for the next flight with the same flightOrigin
-     */
-    @Override
-    public boolean hasNext() {
+        /**
+         * Checks if current Node is not null and below upper bound 'end'
+         * @return False if current is null or out of bounds
+         * @return True if current is non-null and inbounds
+         */
+        @Override
+        public boolean hasNext() {
 
-        return current != null;
-
-        while( this.hasNext() && current.data.getFlightDate().compareTo(start)<0){
-            current = current.nextAirport;
+            return current != null && current.data.getFlightDate().compareTo(end) < 1;
         }
 
+        // Code for NoSuchElementException recevied from:
+        //https://stackoverflow.com/questions/7630014/difficulty-throwing-nosuchelementexception-in-java
+        @Override
+        /**
+         * Move the iterator to the element in the MyLinkedList
+         */
+        public Flight next() {
 
+            if (!hasNext()){
+                throw new NoSuchElementException();
+            }
+     
+            Flight retVal = current.data;
+            current = current.next;
+                return retVal;
+        }
     }
-
-    // Code for NoSuchElementException recevied from:
-    //https://stackoverflow.com/questions/7630014/difficulty-throwing-nosuchelementexception-in-java
-    @Override
-    public Flight next() {
-        if (hasNext()){
-            lastReturned = next;
-            next=next.next;
-            return next.data;
-        }
-        else{
-            throw new NoSuchElementException();
-        }
-
-    }
-   }
     
 }
