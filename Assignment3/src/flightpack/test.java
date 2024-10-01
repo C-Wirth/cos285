@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
  * TEST CLASS FOR MyLinkedList
  * 
  * Author: Colby Wirth 
- * Version: 31 September 2024 
+ * Version: 1 October 2024 
  * Course: COS 285 
  * Class: test.java
  */

@@ -6,7 +6,7 @@ Course: COS 285 Data Structures
 
 Instructor: Dr. Behrooz Mansouri
 
-Last Update: 31 September 2024
+Last Update: 1 October 2024
 
 In this project you will find: 
     
@@ -17,6 +17,7 @@ In this project you will find:
         FlightComparator.java
         MyLinkedList.java
         program3.java
+        
         
     How to run program:
 

@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Author: Colby Wirth 
- * Version: 31 September 2024 
+ * Version: 1 October 2024 
  * Course: COS 285 
  * Class: MyLinkedList.java
  */
@@ -17,7 +17,7 @@ public class MyLinkedList{
     Node head;
 
     /**
-     * Default contructor with zero Nodes
+     * Default contructor
      */
     public MyLinkedList(){
         size = 0;
@@ -25,7 +25,7 @@ public class MyLinkedList{
     }
 
     /**
-     * Node Class a static class within MyLinkedList
+     * Node Class - a static class within MyLinkedList that encapsulates each Node from a MyLinkedList object 
      */
     public static class Node{
         Node next;
@@ -46,51 +46,34 @@ public class MyLinkedList{
 
     /**
      * Returns the size of a MyLinkedList object
-     * @return size, an int
+     * @return size, how many elements in the MyLinkedList, an int
      */
     public int getSize(){
         return this.size;
     }
 
     /**
-     * Add method used to appends a node to an ordered MyLinkedList object
+     * Add method used to appends a node to an ordered MyLinkedList object -maintains order
      * Nodes are ordered by LocalDateTime-Flight attribute
      * @param newNode a Node with Flight datatype
      */
     public void add(Node newNode){
 
         size++;
-        
+
         FlightCompareByDate c = new FlightCompareByDate();
         Node current = head;
 
-        while(current.next!=null && !newFlightOrderer(newNode, current, c)){
+        while (current.next != null && c.compare(newNode.data, current.next.data) > 0) { //return -1 if newNode is before current.next
             current = current.next;
         }
-
+    
         newNode.next = current.next;
         current.next = newNode;
         
         if (size > 1) 
             flightOriginFixer(newNode);
     }
-
-       /**
-        * helper method that hanldes the logic for adding the newNode in order to the MyLinkedList
-        * @param newNode the new Node being added
-        * @param current the Node being compared with the newNode by the comparator
-        * @param c FlightCompareByDate orders by LocalDateTime object
-        * @return True if newNode is to be inserted | False if more iterations need to be done
-        */
-        private boolean newFlightOrderer(Node newNode, Node current, FlightCompareByDate c){
-
-            if(current.next == null){
-                current.next = newNode;
-                return true;
-            }
-
-        return c.compare(newNode.data, current.next.data) < 0; //newNode is < current.next
-        }
 
         /**
          * This method inserts the newNode into its respective getAirportName chain
@@ -135,7 +118,7 @@ public class MyLinkedList{
         */
         @Override
         public int compare(Flight f1, Flight f2) {
-            return f1.getFlightDate().compareTo(f2.getFlightDate());
+            return f1.getFlightDate().compareTo(f2.getFlightDate()); //return -1 if f1 is before f2
         }
     }
 
@@ -183,7 +166,6 @@ public class MyLinkedList{
                 tempNode = tempNode.next;
             }
         }
-
 
         /**
          * Checks if current Node is not null and below upper bound 'end'

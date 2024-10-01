@@ -9,15 +9,15 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Author: Colby Wirth 
- * Version: 31 September 2024 
+ * Version: 1 October 2024 
  * Course: COS 285 
  * Class: program3.java
  */
-public class program3 {
+ public class program3 {
     
     /**
      * main method runs Assignment 3
-     * @param args [0] path/to/flights.csv, [1] state, [2] airport1, [3] airport2, [4] airport3
+     * @param args args[0] path/to/flights.csv, args[1] state, args[2] airport1, args[3] airport2, args[4] airport3
      * @throws IOException
      */
     public static void main(String[] args) throws IOException{
@@ -52,20 +52,21 @@ public class program3 {
         LocalDateTime min = LocalDateTime.parse("1994-01-01:01", formatter);
         LocalDateTime max = LocalDateTime.parse("2009-12-31:23", formatter);
 
-        LocalDateTime cur = min.plusYears(1);
+        LocalDateTime curMax = min.plusYears(1);
 
-        while(cur.getYear() <= max.getYear()){
 
-            MyLinkedList.MyItr iterator = flights.iterator(airport, min, cur);
+        while(curMax.getYear() <= max.getYear()){
+
+            MyLinkedList.MyItr iterator = flights.iterator(airport, min, curMax);
 
             int count = 0;
 
-            while(iterator.hasNext()){
+            while(iterator.hasNext()){//issue here - FIX ME
                 count+= iterator.current.data.getPassengers();
                 iterator.next();
             }
-            System.out.println("" + cur.getYear() + ", " + count);
-            cur = cur.plusYears(1);
+            System.out.println("" + curMax.getYear() + ", " + count);
+            curMax = curMax.plusYears(1);
         }
     }
 
