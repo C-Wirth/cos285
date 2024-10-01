@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Author: Colby Wirth 
- * Version: 30 September 2024 
+ * Version: 31 September 2024 
  * Course: COS 285 
  * Class: MyLinkedList.java
  */
@@ -146,7 +146,7 @@ public class MyLinkedList{
      * @param end the last LocalDateTime to finish iterating at
      * @return a MyItr iterator ready to iterate
      */
-   public Iterator<Flight> iterator(String airport, LocalDateTime start, LocalDateTime end){
+   public MyItr iterator(String airport, LocalDateTime start, LocalDateTime end){
         return new MyItr(airport, start, end);
    }
 
@@ -154,11 +154,10 @@ public class MyLinkedList{
     * A class that returns an Iterator for a MyLinkedList object
     @implements Iterator iterates through Flight objects
     */
-   private class MyItr implements Iterator<Flight>{        
+   class MyItr implements Iterator<Flight>{        
         
         LocalDateTime end;
         Node current = null;
-
 
         /**
          * 

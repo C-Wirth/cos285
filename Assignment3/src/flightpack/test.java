@@ -3,6 +3,14 @@ package flightpack;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * TEST CLASS FOR MyLinkedList
+ * 
+ * Author: Colby Wirth 
+ * Version: 31 September 2024 
+ * Course: COS 285 
+ * Class: test.java
+ */
 public class test {
 
 
