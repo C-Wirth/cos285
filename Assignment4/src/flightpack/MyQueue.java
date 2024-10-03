@@ -19,21 +19,21 @@ import java.util.NoSuchElementException;
  */
 public class MyQueue<T, E>{
 
-    private ArrayList<T> list;
+    private ArrayList<T> queue;
 
-    int head;
+    int head =0;
 
-    int tail;
+    int tail=0;
 
-    int size = ;
+    int size =0;
 
     
     /**
      * Constructor for generic MyQueue object with an ArrayList<T>
      */
-    public MyQueue(int elements){
+    public MyQueue(){
 
-        list = new ArrayList<T>(elements);
+        queue = new ArrayList<T>();
 
     }
 
@@ -44,9 +44,7 @@ public class MyQueue<T, E>{
      * @return
      */
     public boolean offer(T input){
-
-        list.add(tail, input);
-
+        return queue.add(input);
     }
 
     /**
@@ -54,7 +52,7 @@ public class MyQueue<T, E>{
      * @return
      */
     public T poll(){
-
+        return queue.removeFirst();
     }
 
     /**
@@ -62,6 +60,7 @@ public class MyQueue<T, E>{
      * @return
      */
     public boolean isEmpty(){
+        return queue.isEmpty();
 
     }
 
@@ -70,6 +69,7 @@ public class MyQueue<T, E>{
      * @return
      */
     public int size(){
+        return queue.size();
 
     }
 
@@ -78,7 +78,7 @@ public class MyQueue<T, E>{
      * @return
      */
     public T peek(){
-
+        return queue.getFirst();
     }
 
 }
