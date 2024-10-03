@@ -67,7 +67,7 @@ public class QueueSimilator {
 
             Flight temp= aList.get(0);
             queue.offer(temp);
-            aList.remove(0);
+            aList.remove(0); //we need to make a copy of the aList before using it **
 
        }
 
