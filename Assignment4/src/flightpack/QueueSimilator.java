@@ -1,12 +1,10 @@
 package flightpack;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class QueueSimilator {
 
-    private ArrayList<Flight> aList; // save input data -- sorted on Flight
+    private ArrayList<Flight> aList; // save input data -- sorted vy Flight
     private MyQueue<Flight> queue; //used for similation
     private int processTime; // total process time in each day based on counters
 

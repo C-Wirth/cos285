@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 /**
  * Author: Colby Wirth 
- * Version: 1 October 2024 
+ * Version: 4 October 2024 
  * Course: COS 285 
  * Class: MyQueue.java 
- * Uses generic types - implemented with an ArrayList
+ * Uses generic types - implemented with an ArrayList as an underlying data structure
  * @param <E>
  */
 public class MyQueue<T, E>{

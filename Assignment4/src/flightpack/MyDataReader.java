@@ -6,18 +6,91 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Author: Colby Wirth 
- * Version: 21 September 2024 
+ * Version: 4 October 2024 
  * Course: COS 285 
  * Class: MyDataReader.java
  */
 public class MyDataReader {
 
     /**
+     * 
+     * FlightSorted returns a sorted ArrayList of Flights
+     * 
+     * @param originAirportName the Airport Origin to build the ArrayList<Flight> upon
+     * @return flightsWithSameOrigin a sorted ArrayList of flights matching airport name 'Origin' 
+     */
+    public ArrayList<Flight> FlightSorted(String originAirportName, String filePath) throws IOException{
+
+        ArrayList<Flight> flightsWithSameOrigin = new ArrayList<>();
+
+        try (BufferedReader flightDataReader = new BufferedReader(new FileReader(filePath))) {
+
+            flightDataReader.readLine();
+            String curFlightInfo;
+            Flight newFlight;
+
+            while ((curFlightInfo = flightDataReader.readLine()) != null) {
+
+                if ((newFlight = OriginChecker(curFlightInfo, originAirportName)) == null) {
+                continue;
+                }
+                flightsWithSameOrigin.add(newFlight);
+            }
+        }
+
+        Collections.sort(flightsWithSameOrigin, new FlightDateComparator());
+        return flightsWithSameOrigin;
+    }
+
+    /**
+     * FlightOrganizerBS implements a binary Search to find where newFlight's correct positioning
+     * @param newFlight
+     * @param flights
+     * @return 
+     */
+    // private void FlightOrganizerBS(Flight newFlight, ArrayList<Flight> flights){
+        
+    //     // if(flights.isEmpty()){
+    //     //     flights.add(newFlight);
+    //     //     return;
+    //     // }
+    //     // int insertionPoint = Collections.binarySearch(flights, newFlight, c);
+
+    //     // if(insertionPoint < 0){
+    //     //     insertionPoint = -(insertionPoint+1);
+    //     // }
+    //     flights.add(newFlight);
+    // }
+
+    /**
+     * This is a helper method for FlightSorted - 
+     * checks if the current flight being parsed has the same Origin airport as the input
+     * 
+     * @param CurFlightInfo the String being parsed to creat a Flight object with
+     * @param originAirportName the String of the Origin Airport to be matched
+     * @return null if not a match | flightParser(flightElements) - this returns a Flight object with matching Origin Airport
+     */
+    private Flight OriginChecker(String curFlightInfo, String originAirportName){
+
+        String[] flightElements = curFlightInfo.split(",");
+
+             if (!flightElements[0].equals(originAirportName)){
+                return null;
+            }
+            else{ 
+                return flightParser(flightElements);
+            }
+    }
+
+    /**
      * This method returns a MyArrayList<Flight> object with all Flight's with an originState attribute
      *       that matches the originState input parameter.
+     * 
      * @param flightListPath the String to the csv file to read
      * @param originState the origin state to find
      * @return flightsList the MyArrayList<Flight> with an origin that matches originState
