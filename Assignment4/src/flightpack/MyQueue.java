@@ -1,13 +1,6 @@
 package flightpack;
 
-// import flightpack.Flight;
-import java.time.LocalDateTime;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Author: Colby Wirth 
@@ -21,43 +14,37 @@ public class MyQueue<T, E>{
 
     private ArrayList<T> queue;
 
-    int head =0;
-
-    int tail=0;
-
-    int size =0;
-
     
     /**
      * Constructor for generic MyQueue object with an ArrayList<T>
      */
     public MyQueue(){
 
-        queue = new ArrayList<T>();
+        queue = new ArrayList<>();
 
     }
 
 
     /**
-     * 
-     * @param input
-     * @return
+     * offer method by for a MyQueue
+     * @param input a generic Type T
+     * @return a boolean True if input as added, False if input was not added
      */
     public boolean offer(T input){
         return queue.add(input);
     }
 
     /**
-     * 
-     * @return
+     * poll method for a MyQueue object
+     * @return the object at the beginning of the Queue, type T
      */
     public T poll(){
         return queue.removeFirst();
     }
 
     /**
-     * 
-     * @return
+     * isEmpty method for a MyQueue object
+     * @return True if the MyQueue is empty, False if MyQueue is not empty
      */
     public boolean isEmpty(){
         return queue.isEmpty();
@@ -65,8 +52,8 @@ public class MyQueue<T, E>{
     }
 
     /**
-     * 
-     * @return
+     * size method for a MyQueue object
+     * @return the size of the Queue, an int
      */
     public int size(){
         return queue.size();
@@ -74,8 +61,8 @@ public class MyQueue<T, E>{
     }
 
     /**
-     * 
-     * @return
+     * peek method for a MyQueue object
+     * @return the object at the front of the queue without removing it from the MyQueue object
      */
     public T peek(){
         return queue.getFirst();

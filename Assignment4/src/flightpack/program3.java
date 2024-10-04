@@ -61,7 +61,7 @@ import java.time.format.DateTimeFormatter;
 
             int count = 0;
 
-            while(iterator.hasNext()){//issue here - FIX ME
+            while(iterator.hasNext()){
                 count+= iterator.current.data.getPassengers();
                 iterator.next();
             }
