@@ -48,26 +48,6 @@ public class MyDataReader {
     }
 
     /**
-     * FlightOrganizerBS implements a binary Search to find where newFlight's correct positioning
-     * @param newFlight
-     * @param flights
-     * @return 
-     */
-    // private void FlightOrganizerBS(Flight newFlight, ArrayList<Flight> flights){
-        
-    //     // if(flights.isEmpty()){
-    //     //     flights.add(newFlight);
-    //     //     return;
-    //     // }
-    //     // int insertionPoint = Collections.binarySearch(flights, newFlight, c);
-
-    //     // if(insertionPoint < 0){
-    //     //     insertionPoint = -(insertionPoint+1);
-    //     // }
-    //     flights.add(newFlight);
-    // }
-
-    /**
      * This is a helper method for FlightSorted - 
      * checks if the current flight being parsed has the same Origin airport as the input
      * 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class MyQueue<T>{
 
-    private ArrayList<T> queue;
+    private final ArrayList<T> queue;
 
     
     /**
@@ -23,7 +23,6 @@ public class MyQueue<T>{
         queue = new ArrayList<>();
 
     }
-
 
     /**
      * offer method by for a MyQueue

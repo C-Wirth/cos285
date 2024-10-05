@@ -1,34 +1,38 @@
 Author: Colby Wirth
 
-Assignment: Assignment 3
+Assignment: Assignment 4
 
 Course: COS 285 Data Structures
 
 Instructor: Dr. Behrooz Mansouri
 
-Last Update: 1 October 2024
+Last Update: 5 October 2024
 
 In this project you will find: 
     
     -README.md
-     flightpack package:
+    -Assignment4.pdf
+    -flightpack package:
         Airport.java
         Flight.java
         FlightComparator.java
+        FlightDateComparator.java
         MyLinkedList.java
-        program3.java
-        
+        MyDataReader.java
+        MyQueue.java
+        program4.java
+        QueueSimulator.java
         
     How to run program:
 
      First compile ALL programs with the following command from its enclosing folder: 
-     javac flightpack.program3. 
+     javac flightpack.program4. 
 
      After compiling ALL classes, run main class with the command: 
-          java program3 flights.csv ME PWM BGR AUG
+          java program4 flights.csv ME PWM
 
 About: 
-     This program runs the main class called program3 and produces the following information from flights.csv:
+     This program runs the main class called program4 and produces the following information from flights.csv:
 
      i.   Time taken to construct an MyLinkedList from 3 million CSV entries
 

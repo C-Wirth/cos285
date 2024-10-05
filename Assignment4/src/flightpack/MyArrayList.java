@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 /**
  * Author: Colby Wirth
- * Version: 21 September 2024 
+ * Version: 4 October 2024 
  * Course: COS 285 
  * Class : MyArrayList.java
  */public class MyArrayList<T extends Comparable<T>>{

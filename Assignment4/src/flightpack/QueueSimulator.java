@@ -2,11 +2,18 @@ package flightpack;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * 
+ * Author: Colby Wirth 
+ * Version: 5 October 2024 
+ * Course: COS 285 
+ * Class: QueueSimulator.java
+ */
 public class QueueSimulator {
 
-    private ArrayList<Flight> aList; // save input data -- sorted vy Flight
-    private MyQueue<Flight> queue; //used for similation
-    private int processTime; // total process time in each day based on counters
+    private final ArrayList<Flight> aList; // save input data -- sorted vy Flight
+    private final MyQueue<Flight> queue; //used for similation
+    private final int processTime; // total process time in each day based on counters
 
     /**
      * Constructor for a QueueSimulator object
@@ -16,7 +23,7 @@ public class QueueSimulator {
     public QueueSimulator(ArrayList<Flight> aList, int numberCounter){
         
         this.aList = aList; 
-        processTime = numberCounter*360000; //Confusing???
+        processTime = numberCounter*3600;
         queue = new MyQueue<>();
     }
 
@@ -31,20 +38,17 @@ public class QueueSimulator {
         ldtStart = ldtStart.minusHours(1);
         LocalDateTime ldtEnd = aList.get(aList.size()-1).getFlightDate();
 
-
-        for (LocalDateTime ldt = ldtStart; !ldt.isAfter(ldtEnd); ldt = ldt.plusHours(1)) {
-
-            //addPassengers
-            addPassengers(ldt); //*****implement me****
-
-            //process queue
-            boolean success = processQueue(); //****implement me****???
-            if(success==false){
+        for (LocalDateTime ldt = ldtStart; ldt.isBefore(ldtEnd); ldt = ldt.plusHours(1)) {
+           
+            addPassengers(ldt);
+            
+            if (!processQueue()) {
                 return false;
             }
         }
         return true;
     }
+        
 
     /**
      * helper method for simulation processes the timing for a queue of passengers
@@ -63,12 +67,11 @@ public class QueueSimulator {
             currentTime -= passengersProcessTime;
         }
         return queue.isEmpty();
-
     }
 
     /**
-     * helper method for simulation Fix me?
-     * @param ldt
+     * helper method for simulation adds values passengers to queue for processing
+     * @param ldt the hour of processing
      */
     private void addPassengers(LocalDateTime ldt){
 
@@ -76,12 +79,11 @@ public class QueueSimulator {
 
             Flight temp= aList.get(0);
             queue.offer(temp);
-            aList.remove(0); //we need to make a copy of the aList before using it **
+            aList.remove(0);
 
+            if(aList.isEmpty()){
+                return;
+            }
        }
-
     }
-
-
-
 }
