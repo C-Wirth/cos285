@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class program4 {
 
-    private static final String FILE_PATH = "src/flights.csv";
+    // private static final String MY_FILE_PATH = "src/flights.csv";
     private static final MyDataReader DATA_READER = new MyDataReader();
 
    /** 
@@ -20,21 +20,17 @@ public class program4 {
     */
     public static void main(String[] args) throws IOException{
 
+        String filePath = args[0];
+        String state = args[1];
+        String airport = args[2];
 
-        String airport1 = "PWM";
-        simRunner(airport1);
+        simRunner(airport, state, filePath);
 
-        String airport2 = "BGR";
-        simRunner(airport2);
-
-        String airport3 = "AUG";
-        simRunner(airport3);
-
-        String airport4 = "LGA";
-        simRunner(airport4);
-
-        String airport5 = "JFK";
-        simRunner(airport5);
+        // simRunner("PWM", "ME", MY_FILE_PATH);
+        // simRunner("BGR", "ME", MY_FILE_PATH);
+        // simRunner("AUG", "ME", MY_FILE_PATH);
+        // simRunner("LGA", "NY", MY_FILE_PATH);
+        // simRunner("JFK", "NY", MY_FILE_PATH);
 
     }
 
@@ -43,15 +39,23 @@ public class program4 {
      * @param airport the airport name to run the simulation with
      * @throws IOException
      */
-    public static void simRunner(String airport) throws IOException{
+    public static void simRunner(String airport, String state, String filePath) throws IOException{
 
-        ArrayList<Flight> flights = DATA_READER.FlightSorted(airport, FILE_PATH);
 
+        long startTime = System.currentTimeMillis();
+        ArrayList<Flight> flights = DATA_READER.FlightSorted(airport, filePath);
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        System.out.println("Seconds to read the flights from: " + state + " " +  airport + " " + elapsedTime);
+       
         int i = 1;
+        startTime = System.currentTimeMillis();
 
         while(! new QueueSimulator(flights, i).simulation()){
             i+=1;
         }
-        System.out.println("Counters required for " + airport + ": " + i);
+
+        elapsedTime = System.currentTimeMillis() - startTime;
+        System.out.println("Seconds to find the minimum number of counters for: " + airport + " " + elapsedTime);
+        System.out.println("Minimum number of counters for: " + airport + ": " + i + "\n");
     }
 }

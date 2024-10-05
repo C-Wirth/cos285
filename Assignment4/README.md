@@ -11,13 +11,13 @@ Last Update: 5 October 2024
 In this project you will find: 
     
     -README.md
-    -Assignment4.pdf
+    -Colby_Wirth_Assignment4.pdf
     -flightpack package:
         Airport.java
         Flight.java
         FlightComparator.java
         FlightDateComparator.java
-        MyLinkedList.java
+        MyArrayListList.java
         MyDataReader.java
         MyQueue.java
         program4.java
@@ -29,16 +29,17 @@ In this project you will find:
      javac flightpack.program4. 
 
      After compiling ALL classes, run main class with the command: 
-          java program4 flights.csv ME PWM
+          java program4 <path/to/flights.csv> ME PWM
 
 About: 
-     This program runs the main class called program4 and produces the following information from flights.csv:
+     This program runs the main class called program4.  
+     Information regarading minimum counters needed for PWM, BGR, AUG, LGA and JFK:
 
-     i.   Time taken to construct an MyLinkedList from 3 million CSV entries
+Minimum number of counters for: PWM: 15
+Minimum number of counters for: BGR: 6
+Minimum number of counters for: AUG: 1
+Minimum number of counters for: LGA: 93
+Minimum number of counters for: JFK: 69
 
-     ii.  Number of total passengers on flights to PWM from years 1994-2009
 
-     iii.  Number of total passengers on flights to BGR from years 1994-2009
-
-     iv.  Number of total passengers on flights to AUG from years 1994-2009
      
