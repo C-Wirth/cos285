@@ -23,10 +23,10 @@ public class test {
         String filePath = "bin/flights.csv";
 
         ArrayList<Flight> flights = dr.FlightSorted(airport, filePath);
+
         for(Flight f : flights)
             System.out.println(f.getOrigin() + " " + f.getFlightDate());
-
-
+ 
 
         
     //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH");

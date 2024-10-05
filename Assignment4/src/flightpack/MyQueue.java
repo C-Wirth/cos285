@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Uses generic types - implemented with an ArrayList as an underlying data structure
  * @param <E>
  */
-public class MyQueue<T, E>{
+public class MyQueue<T>{
 
     private ArrayList<T> queue;
 
