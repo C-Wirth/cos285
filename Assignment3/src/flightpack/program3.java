@@ -22,11 +22,17 @@ import java.time.format.DateTimeFormatter;
      */
     public static void main(String[] args) throws IOException{
 
-        String path = args[0];
-        String state = args[1];
-        String airport1 = args[2];
-        String airport2 = args[3];
-        String airport3 = args[4];
+        // String path = args[0];
+        // String state = args[1];
+        // String airport1 = args[2];
+        // String airport2 = args[3];
+        // String airport3 = args[4];
+
+        String path = "path/to/flights.csv";
+        String state = "ME";
+        String airport1 = "PWM";
+        String airport2 = "AUG";
+        String airport3 = "BGR";
 
         MyLinkedList flights = flightReaderByState(path, state);
 
