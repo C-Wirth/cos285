@@ -1,0 +1,27 @@
+/**
+*Colby Wirth
+*COS 285
+*Lab 5 Assignment
+*17 October 2024
+*
+*/
+  public ArrayList<Song> toSortedArrayList(){
+
+            ArrayList<Song> list = new ArrayList<>();
+
+            toSortedArrayList(list, root);
+
+            return list;
+        }
+
+            private ArrayList<Song> toSortedArrayList(ArrayList<Song> list, Node root){
+
+                if(root == null)
+                    return list;
+
+                list.addAll(toSortedArrayList(list, root.left));
+                list.add(root.data);
+                list.addAll(toSortedArrayList(list, root.right));
+
+                return list;
+            }
