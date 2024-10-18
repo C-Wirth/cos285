@@ -5,23 +5,33 @@
 *17 October 2024
 *
 */
-  public ArrayList<Song> toSortedArrayList(){
 
-            ArrayList<Song> list = new ArrayList<>();
+/**
+*This method returns a sorted ArrayList of songs
+*
+*@return list - a sorted ArrayList<Song>
+/
+public ArrayList<Song> toSortedArrayList(){
 
-            toSortedArrayList(list, root);
+    ArrayList<Song> list = new ArrayList<>();
 
-            return list;
-        }
+        toSortedArrayList(list, root);
 
-            private ArrayList<Song> toSortedArrayList(ArrayList<Song> list, Node root){
+        return list;
+    }
 
-                if(root == null)
-                    return list;
+/*
+*Helper method for toSortedArrayList
+*Handles the logic of an in-order traversal of a BST
+*/
+private ArrayList<Song> toSortedArrayList(ArrayList<Song> list, Node root){
 
-                list.addAll(toSortedArrayList(list, root.left));
-                list.add(root.data);
-                list.addAll(toSortedArrayList(list, root.right));
+    if(root == null)
+        return list;
 
-                return list;
-            }
+    list.addAll(toSortedArrayList(list, root.left));
+    list.add(root.data);
+    list.addAll(toSortedArrayList(list, root.right));
+
+    return list;
+}
