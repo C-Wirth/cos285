@@ -199,4 +199,32 @@ public class BinarySearchTree {
 
                 return newNode;
             }
+
+            /**
+             * This method 
+             * @return
+             */
+            public ArrayList<String> popularArtist(){
+
+                return popularArtist(root, new ArrayList<>());
+                
+            }
+
+            private ArrayList<String> popularArtist(Node root, ArrayList<String> artists){
+                
+                if(root == null)
+                    return artists;
+                
+                artists.addAll(popularArtist(root.left, artists));
+               
+                if (!artists.contains(root.data.getArtist()) && root.data.getViews() == Integer.MAX_VALUE)
+                    artists.add(root.data.getArtist());
+                
+
+                artists.addAll(popularArtist(root.right, artists));
+
+                return artists;
+
+
+            }
         }
