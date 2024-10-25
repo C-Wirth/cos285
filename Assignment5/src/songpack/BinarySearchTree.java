@@ -3,17 +3,27 @@ package songpack;
 import java.util.ArrayList;
 
 /**
- * 
+ * Author: Colby Wirth 
+ * Version: 25 October 2024 
+ * Course: COS 285 
+ * Class: BinarySearchTree.java
  */
 public class BinarySearchTree {
 
     Node root;
 
+    /**
+     * Constructor for a BinarySearchTree
+     */
     public BinarySearchTree(){
         this.root = null;
     }
 
-    public class Node{
+    /**
+     * Node class encapsulates A Node object 
+     * 
+     */
+    public static class Node{
         Song data;
         Node left;
         Node right;
@@ -27,7 +37,7 @@ public class BinarySearchTree {
         /**
          * This method validates whether or not a Tree is a valid BST
          * @param root the root value for a BST
-         * @return
+         * @return true if valid, false if invalid
          */
         public boolean isValidBST(Node root){
 
@@ -85,11 +95,11 @@ public class BinarySearchTree {
         }
 
             /**
-             * Helper method for toSortedArrayList
+             * Helper method for toSortedArrayList.  Handles the logic
              * Handles the logic of an in-order traversal of a BST
-             * @param list The sorted  Arraylist of Songs to 
-             * @param root
-             * @return
+             * @param list The sorted  Arraylist of Songs
+             * @param root the root of the tree or root of a subtree
+             * @return list the sorted Arraylist of Songs
              */
             private ArrayList<Song> toSortedArrayList(ArrayList<Song> list, Node root){
 
@@ -113,8 +123,7 @@ public class BinarySearchTree {
             }
 
             /**
-             * Helper method for insert method.
-             * Hanldes the logic
+             * Helper method for insert method.  Handles the logic
              * @param item the new Song being added
              * @param root the root of the subtree
              * @return root, the root of the newly updated BST
@@ -136,7 +145,7 @@ public class BinarySearchTree {
             }
 
             /**
-             * search method finds all songs with a view count that is greater than or equal to a specified viewcount
+             * Search method finds all songs with a view count that is greater than or equal to a specified viewcount
              * 
              * @param views the specified viewcount
              * @return an ArrayList of songs with a viewcount greater than or equal to the specified viewcount
@@ -146,7 +155,7 @@ public class BinarySearchTree {
             }
 
             /**
-             * helper method for search method
+             * helper method for search method.  Handles the logic
              * uses In-order traversal to find songs with larger view counts
              * @param views
              * @param songs
@@ -182,7 +191,7 @@ public class BinarySearchTree {
             }
 
             /**
-             * The helper method for clone that handles the logic for cloning a BST
+             * The helper method for clone that handles the logic for cloning a BST.   
              * Uses preorder traversal
              * @param root the current root of a tree /subtree
              * @return the root node of the new subtree
@@ -201,8 +210,8 @@ public class BinarySearchTree {
             }
 
             /**
-             * This method 
-             * @return
+             * This method finds all of the Artists with a view count that is the max integer value
+             * @return popularArtist the list of artists with max views
              */
             public ArrayList<String> popularArtist(){
 
@@ -210,6 +219,12 @@ public class BinarySearchTree {
                 
             }
 
+            /**
+             * Helper method for popularArtist, handles the logic with an in-order traversal
+             * @param root the root node of a tree or subtree
+             * @param artists the list of popular artists
+             * @return artists the list of popular artists
+             */
             private ArrayList<String> popularArtist(Node root, ArrayList<String> artists){
                 
                 if(root == null)
@@ -224,7 +239,41 @@ public class BinarySearchTree {
                 artists.addAll(popularArtist(root.right, artists));
 
                 return artists;
+            }
+
+            /**
+             * This method filters a BST within specified upper and lower bounds
+             * @param minView the min boundary, inclusive
+             * @param maxView the max boundary, inclusive
+             * @return the rootNode of the modified tree
+             */
+            public Node fliterByView(int minView, int maxView){
+
+                return filterByView(root, minView, maxView);
+            }
+
+            /**
+             * Helper method for filterByView.  Handles the logic for finding the tree within the specified bounds
+             * @param root the root node of a tree or current root node of a subtree
+             * @param minView the min boundary, inclusive
+             * @param maxView the max boundary, inclusive
+             * @return the rootNode of the modified tree
+             */
+            private Node filterByView(Node root, int minView, int maxView){
+
+            if (root == null)
+                return root;
+            
+            filterByView(root.left, minView, maxView);
+            filterByView(root.right, minView, maxView);
 
 
+            if(root.data.getViews() < minView)  
+                return root.right;
+            
+            else if(root.data.getViews() > maxView)  
+                return root.left;
+
+            return root;
             }
         }
