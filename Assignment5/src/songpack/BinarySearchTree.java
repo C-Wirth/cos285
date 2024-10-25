@@ -41,45 +41,27 @@ public class BinarySearchTree {
          */
         public boolean isValidBST(Node root){
 
+           return isValid(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        }
+        /**
+         * helper function handles the logic for isValidBST
+         * @param root the of tree or root of a subtree
+         * @param min min val for comparison
+         * @param max max val for comparison
+         * @return
+         */
+        public boolean isValid(Node root, int min, int max){
+
             if(root == null)
                 return true;
-            
-            if(root.left != null && root.data.compareTo(maxVal(root.left).data) <= 0)
+
+            if(!(root.data.getViews() > min && root.data.getViews() > max))
                 return false;
             
-            if(root.right != null && root.data.compareTo(minVal(root.right).data) >0)
-                return false;
-            
-            return (isValidBST(root.left) && isValidBST(root.right));
+            return isValid(root.left, min, root.data.getViews()) && isValid(root.right, max, root.data.getViews());
+
         }
-
-        /**
-         * helper method for isValidBST, finds the largest root in a subtree
-         * 
-         * @param root the root node of a subtree
-         * @return root the largest node in a subtree
-         */
-        private Node maxVal(Node root){
-
-            while(root.right != null)
-                root = root.right;
-            
-            return root;
-        }
-
-        /**
-         * helper method for isValidBST, finds the smallest root in a subtree
-         * 
-         * @param root the root node of a subtree
-         * @return root the smallest node in a subtree
-         */
-        private Node minVal(Node root){
-            while(root.left != null)
-                root = root.left;
-            
-            return root;
-        }
-
        /**
         *This method returns a sorted ArrayList of songs by using inorder traversal of the BST of Song nodes
         *
@@ -131,10 +113,10 @@ public class BinarySearchTree {
                    return new Node(item);
                 }
 
-                else if(item.compareTo(root.data) < 0) //if item < root
+                if(item.compareTo(root.data) < 0) //if item < root
                     root.left = insert(item, root.left);
                 
-                else if(item.compareTo(root.data) >= 0) //if item  >= root
+                else//if item  >= root
                     root.right = insert(item, root.right);
 
 
@@ -207,36 +189,47 @@ public class BinarySearchTree {
             }
 
             /**
-             * This method finds all of the Artists with a view count that is the Integer.MAX_VALUE
+             * This method finds all of the Artists with the max views found in a BST
              * @return popularArtist the list of artists with max views
              */
             public ArrayList<String> popularArtist(){
 
-                return popularArtist(root, new ArrayList<>());
+                ArrayList<String> artists = new ArrayList<>();
+
+                if (root != null) {
+                    artists.add(root.data.getArtist());
+                    popularArtist(root, artists);
+                }
                 
+                return artists;
             }
 
             /**
-             * Helper method for popularArtist, handles the logic with an in-order traversal
+             * Helper method for popularArtist, handles the logic
              * @param root the root node of a tree or subtree
              * @param artists the list of popular artists
              * @return artists the list of popular artists
              */
-            private ArrayList<String> popularArtist(Node root, ArrayList<String> artists){ fix me 
-                 
+            private ArrayList<String> popularArtist(Node root, ArrayList<String> artists){
+
                 if(root == null)
                     return artists;
                 
-                artists.addAll(popularArtist(root.left, artists));
-               
-                if (!artists.contains(root.data.getArtist()) && root.data.getViews() == Integer.MAX_VALUE)
-                    artists.add(root.data.getArtist());
-                
+                if (root.right != null) {
 
-                artists.addAll(popularArtist(root.right, artists));
+                    if (root.right.data.getViews() > root.data.getViews()) {
+                        artists.clear();
+                        artists.add(root.right.data.getArtist());
+                    } 
+                    else if (root.right.data.getViews() == root.data.getViews()) {
 
-                return artists;
-            }
+                        if (!artists.contains(root.right.data.getArtist())) 
+                            artists.add(root.right.data.getArtist()); 
+                    }
+                }
+            
+                return popularArtist(root.right, artists);
+                }
 
             /**
              * This method filters a BST within specified upper and lower bounds
@@ -244,7 +237,7 @@ public class BinarySearchTree {
              * @param maxView the max boundary, inclusive
              * @return the rootNode of the modified tree
              */
-            public Node fliterByView(int minView, int maxView){
+            public Node filterByView(int minView, int maxView){
 
                 return filterByView(root, minView, maxView);
             }
@@ -261,8 +254,8 @@ public class BinarySearchTree {
             if (root == null)
                 return root;
             
-            filterByView(root.left, minView, maxView);
-            filterByView(root.right, minView, maxView);
+            root.left = filterByView(root.left, minView, maxView);
+            root.right = filterByView(root.right, minView, maxView);
 
 
             if(root.data.getViews() < minView)  

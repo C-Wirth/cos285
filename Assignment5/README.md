@@ -32,7 +32,7 @@ About:
 
       Outputs:
 
-      2014 milliseconds to read the rock songs into a binary search tree
+      2303 milliseconds to read the rock songs into a binary search tree
 
       Top-10 titles of songs with the highest number of views:
 
@@ -40,15 +40,15 @@ About:
 
       8 milliseconds to find top-10 popular songs
 
-      9 milliseconds to clone the tree
+      8 milliseconds to clone the tree
 
       validation result of cloning and filtering: true
 
-      6 milliseconds to filter the tree and validate the binary search tree
+      3 milliseconds to filter the tree and validate the binary search tree
 
-      The Artist(s) with the highest view(s) in the given range: Queen
+      The Artist(s) with the highest view(s) in the given range: [Queen]
 
-      1 milliseconds to find popular artists
+      0 milliseconds to find popular artists
 
 
      
