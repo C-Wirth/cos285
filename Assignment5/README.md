@@ -6,26 +6,49 @@ Course: COS 285 Data Structures
 
 Instructor: Dr. Behrooz Mansouri
 
-Last Update: 16 October 2024
+Last Update: 25 October 2024
 
 In this project you will find: 
     
     -README.md
+    
+    -songpack
+          BinarySearchTree.java
+          program5.java
+
     -Colby_Wirth_Assignment5.pdf
     
         
     How to run program:
 
      First compile ALL programs with the following command from its enclosing folder: 
-     **PATH HERE**
+     javac path/to/songpack/*
 
-     After compiling ALL classes, run main class with the command: 
-          java **COMMAND HERE**
+     After compiling ALL classes, run program5 class with the command: 
+          java path/to/songpack/program5 <genre name>
 
 About: 
-     ABOUT HERE
+     This program takes a file of Songs and a specified genre type and executes the main method in program5.java
 
-    OUTPUTS HERE
+      Outputs:
+
+      2014 milliseconds to read the rock songs into a binary search tree
+
+      Top-10 titles of songs with the highest number of views:
+
+      [Bohemian Rhapsody,Hallelujah,Do I Wanna Know?,Mr. Brightside,Dont Stop Believin,Hotel California,Smells Like Teen Spirit,I Miss You,Blinded by the Light,Wish You Were Here]
+
+      8 milliseconds to find top-10 popular songs
+
+      9 milliseconds to clone the tree
+
+      validation result of cloning and filtering: true
+
+      6 milliseconds to filter the tree and validate the binary search tree
+
+      The Artist(s) with the highest view(s) in the given range: Queen
+
+      1 milliseconds to find popular artists
 
 
      

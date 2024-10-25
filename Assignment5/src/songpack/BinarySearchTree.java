@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class BinarySearchTree {
 
-    Node root;
+    public Node root;
 
     /**
      * Constructor for a BinarySearchTree
@@ -99,18 +99,15 @@ public class BinarySearchTree {
              * Handles the logic of an in-order traversal of a BST
              * @param list The sorted  Arraylist of Songs
              * @param root the root of the tree or root of a subtree
-             * @return list the sorted Arraylist of Songs
              */
-            private ArrayList<Song> toSortedArrayList(ArrayList<Song> list, Node root){
+            private void toSortedArrayList(ArrayList<Song> list, Node root){
 
                 if(root == null)
-                    return list;
+                    return;
 
-                list.addAll(toSortedArrayList(list, root.left));
+                toSortedArrayList(list, root.left);
                 list.add(root.data);
-                list.addAll(toSortedArrayList(list, root.right));
-
-                return list;
+                toSortedArrayList(list, root.right);
             }
 
             /**
@@ -210,7 +207,7 @@ public class BinarySearchTree {
             }
 
             /**
-             * This method finds all of the Artists with a view count that is the max integer value
+             * This method finds all of the Artists with a view count that is the Integer.MAX_VALUE
              * @return popularArtist the list of artists with max views
              */
             public ArrayList<String> popularArtist(){
@@ -225,8 +222,8 @@ public class BinarySearchTree {
              * @param artists the list of popular artists
              * @return artists the list of popular artists
              */
-            private ArrayList<String> popularArtist(Node root, ArrayList<String> artists){
-                
+            private ArrayList<String> popularArtist(Node root, ArrayList<String> artists){ fix me 
+                 
                 if(root == null)
                     return artists;
                 
