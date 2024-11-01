@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  * Author: Colby Wirth 
- * Version: 30 October 2024 
+ * Version: 1 November 2024 
  * Course: COS 285 
  * Class: MyDataReader.java
  */
@@ -68,20 +68,23 @@ public class MyDataReader {
      */
     public static ArrayList<Song> readFileToArrayList(String tsvFilePath, String tag) throws IOException
     {
-        ArrayList<Song> songAL = new ArrayList<>();
-        int counter = 0;
-        BufferedReader TSVReader = new BufferedReader(new FileReader(tsvFilePath));
-            String line = TSVReader.readLine();
-            while ((line = TSVReader.readLine()) != null) {   
-                Song song = MyDataReader.lineToReport(line);
-                if(song.getTag().equals(tag))
-                songAL.add(song);
-              counter+=1;
-              // using this to view progress
-              if(counter%50000==0)
-                  System.out.println(counter + " records added");
-            }
+
+        return readFileToBST(tsvFilePath, tag).toSortedArrayList();
+
+        // ArrayList<Song> songAL = new ArrayList<>();
+        // int counter = 0;
+        // BufferedReader TSVReader = new BufferedReader(new FileReader(tsvFilePath));
+        //     String line = TSVReader.readLine();
+        //     while ((line = TSVReader.readLine()) != null) {   
+        //         Song song = MyDataReader.lineToReport(line);
+        //         if(song.getTag().equals(tag))
+        //         songAL.add(song);
+        //       counter+=1;
+        //       // using this to view progress
+        //       if(counter%50000==0)
+        //           System.out.println(counter + " records added");
+        //     }
         
-        return songAL;
+        // return songAL;
         }
 }

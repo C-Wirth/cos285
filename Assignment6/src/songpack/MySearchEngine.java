@@ -1,7 +1,7 @@
 
 /**
  * Colby Wirth
- * Version 31 October 2024
+ * Version 1 November 2024
  * Course: COS 285
  * MySearchEngine.java
  */
@@ -48,14 +48,14 @@ public final class MySearchEngine {
 
         for(Song song : songs){
 
-            TreeMap<String, Double> lyricCount = new TreeMap<>();
+            TreeMap<String, Double> lyricCount = new TreeMap<>(); //the inner TreeMap within tf TreeMap
 
             String[] lyrics = song.getLyrics().toLowerCase().split("\\s+");
 
-            for(String lyric : lyrics){   
+            for(String lyric : lyrics){   //iterate on all in each song lyrics, update the count
                 lyricCount.put(lyric, lyricCount.getOrDefault(lyric, 0.0) + 1.0);
             }
-            for(String lyric : lyrics){
+            for(String lyric : lyrics){ //compute the frequency ratio: instances/lyrics.length
                 lyricCount.put(lyric, lyricCount.get(lyric)/ lyrics.length);
             }
            tf.put(song, lyricCount);
@@ -70,27 +70,25 @@ public final class MySearchEngine {
      */
     public void calculateIDF(ArrayList<Song> songs){
 
-        for(Song song : songs){
+        for(Song song : songs){ //first part maps every word in a song to a Treetset
 
-            String[] words = song.getLyrics().split(" ");
+            String[] words = song.getLyrics().split("\\s+");
 
             TreeSet<String> uniqueWords = new TreeSet<>(Arrays.asList(words));
 
-            for(String word : uniqueWords){
+            for(String word : uniqueWords){ //nested for loop adds each word from the specified song to idf TreeMap
 
                 idf.put(word, idf.getOrDefault(word, 0.0)+1);
             }
         }
 
-        for(String lyric : idf.keySet()){
+        for(String lyric : idf.keySet()){ //now apply the idf function on each term in the idf TreeMap
 
-            double nX = idf.get(lyric);
+            double nX = idf.get(lyric); //n(x) is the number of songs with the word
 
-            double idfVal = (songs.size()- (nX + 0.5)/(nX + 0.5)) + 1;
-            idfVal = Math.log(idfVal);
-
-            // double idfVal = Math.log((double) songs.size() / (1 + nX));
-
+            double numerator = (songs.size() - nX + 0.5);
+            double denominator = nX + 0.5;            
+            double idfVal = Math.log((numerator/denominator)+1);
             idf.put(lyric, idfVal);
 
         }
@@ -101,15 +99,15 @@ public final class MySearchEngine {
      * 
      * The keys is a set of all inputted Song objects from the Constructor
      * The value is a double:  (# of lyrics)/(average length of all song)
-     * @param songs
+     * @param songs the input ArrayList of songs
      */
     public void calculateAvgLength(ArrayList<Song> songs){
 
         double summation = 0.0;
         for(Song song : songs){
-            int songLength = song.getLyrics().split("\\s+").length;
+            double songLength = song.getLyrics().split("\\s+").length;
             summation += songLength;
-            avglength.put(song, (double) songLength);
+            avglength.put(song, songLength);
         }
 
         this.avgSongLength = summation/songs.size();
@@ -127,42 +125,45 @@ public final class MySearchEngine {
      */
     public double calculateRelevance(Song song, String query){
 
-        String[] queryArray = query.split("\\s+");
+        if(song == null)
+            return 0.0;
+
+        String[] queryArray = query.split("\\s+"); //this was made lowercase previously in search fucntion
 
         double score = 0.0;
 
         for(String word : queryArray){ //relevance equation
 
-            word = word.toLowerCase();
-
             double idfVal = idf.getOrDefault(word, 0.0);
 
-            double tfVal = 0;
+            if((idfVal == 0.0) || tf.get(song)==null || tf.get(song).get(word)==null) //control for null values
+                continue;                                                          //skip this iteration with 0 instances, 
+                                                                                   //because numerator will always = 0
 
-            if(tf.get(song) != null && tf.get(song).get(word) != null)
-                tfVal = tf.get(song).get(word);
+            double tfVal = tf.get(song).get(word);
 
             double songLength = song.getLyrics().split("\\s+").length;
 
            double numerator = idfVal*tfVal*(CONSTANT_K_1+1.0);
-           double denominator =tfVal + (CONSTANT_K_1 * ((1.0-CONSTANT_B)+(CONSTANT_B*(songLength/avgSongLength))));
+           double denominator = tfVal + (CONSTANT_K_1 * ((1.0-CONSTANT_B)+(CONSTANT_B*(songLength/avgSongLength))));
 
            score+=(numerator/denominator);
-
         }
         return score;
     } 
 
     /**
-     * serach method takes the query and prints the top-5 songs with the highest relevacne score
+     * search method takes the query and prints the top-5 songs with the highest relevacne score
      * @param query
      */
     public void search(String query){
 
+        query = query.toLowerCase();
+
         TreeMap<Song, Double> relevanceScores = new TreeMap<>();
 
         for(Song song : tf.keySet()){ //look at all songs in the MySearchEngine
-            relevanceScores.put(song,calculateRelevance(song, query));
+            relevanceScores.put(song,calculateRelevance(song, query)); //how relevant is my query?
         }
   
         List<Map.Entry<Song, Double>> sortedOutput = sortedByValue(relevanceScores, 5);
@@ -171,7 +172,7 @@ public final class MySearchEngine {
     }
 
     /**
-     * helper method fpr search method
+     * helper method for search method
      * 
      * This method returns a sorted list of top k results as a list of entries <Song,Double>
      * @param treeMap
@@ -212,5 +213,4 @@ public final class MySearchEngine {
         rank+=1;
         }
         }
-
 }

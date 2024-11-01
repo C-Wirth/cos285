@@ -5,13 +5,12 @@ import java.util.ArrayList;
 
 /**
  * Colby Wirth
- * Version 30 October 2024
+ * Version 1 November 2024
  * Dr. Berhrooz Mansouri
  * program 6
  */
 public class program6 {
 
-    public static final String QUERY0 = "back in black";
     public static final String QUERY1 = "we are the champions";
     public static final String QUERY2 = "i will always love you";
     public static final String QUERY3 = "walking on sunshine";
@@ -38,7 +37,6 @@ public class program6 {
             System.out.println("\n" + endtime + " milliseconds to build the index");
     
             //execute queries
-            queryMaker(QUERY0);
             queryMaker(QUERY1);
             queryMaker(QUERY2);
             queryMaker(QUERY3);
