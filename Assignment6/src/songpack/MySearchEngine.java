@@ -14,20 +14,27 @@ import java.util.TreeSet;
 
 public class MySearchEngine {
 
-    TreeMap<Song, TreeMap<String, Double>> tf;
-    TreeMap<String, Double> idf;
-    TreeMap<Song, Double> avglength;
+    TreeMap<Song, TreeMap<String, Double>> tf;//term frequency
+    TreeMap<String, Double> idf; //Inverse Document Frequency
+    TreeMap<Song, Double> avglength; //avearge length of each song
 
+    /**
+     * Generic constructor for a MySearchEngine
+     * This populates all TreeMaps fields above from an ArrayList of Song objects
+     * @param songs
+     */
     public MySearchEngine(ArrayList<Song> songs){
-        calculateTF(songs);
-        calculateIDF(songs);
-        calculateAvgLength(songs);
+        calculateTF(songs); 
+        calculateIDF(songs); 
+        calculateAvgLength(songs); 
     }
 
     /**
-     * This method adds all values from a SearchEngine's 'Songs' attribute to a TreeMap<Song,TreeMap<String,Double>>
-     * The nested TreeMap holds a key-value pair <String,Double> where each String is a unique lyric from the Song's 'Lyrics' field, 
-     * and the Double is the the count of the lyric
+     * This method populates a MySearchEngine's TreeMap<Song, TreeMap<String, Double>> tf
+     * The outer TreeMap has a key set that represents every Song passed from the ArrayList<Song> to the Constructor
+     * The values for outer Tree map are the inner Treemap<String,Double>
+     * The String is the set of every lyric found in a Song
+     * The Double is the tf of each lyric with respect to the key'd Song
      * 
      */
     public void calculateTF(ArrayList<Song>  songs){
@@ -41,16 +48,19 @@ public class MySearchEngine {
             for(String lyric : lyrics){   
                 lyricCount.put(lyric, lyricCount.getOrDefault(lyric, 0.0) + 1.0);
             }
+            for(String lyric : lyrics){
+                lyricCount.put(lyric, lyricCount.get(lyric)/ lyrics.length);
+            }
            tf.put(song, lyricCount);
         }
-
-        int numWords = lyrics.size();
-        for(lyric : lyrics){ //i need the ratio - update the tfTree value
-
         }
-    }
 
-    // implement IOT 
+    /**
+     * This method populates a MySearchEngine's TreeMap<String, Double> idf;
+     * The keys are a set of Strings which repesent every lyric found from the ArrayList of Songs passed into the Constructor
+     * The values is the idf value for each lyric in the entire set of songs
+     * @param songs
+     */
     public void calculateIDF(ArrayList<Song> songs){
 
         for(Song song : songs){
@@ -78,18 +88,23 @@ public class MySearchEngine {
         }
     }
 
+    /**
+     * This method populates a MySearchEngine's  avglength TreeMap<Song,Double> object
+     * 
+     * The keys is a set of all inputted Song objects from the Constructor
+     * The value is a double:  (# of lyrics)/(average length of a song)
+     * @param songs
+     */
     public void calculateAvgLength(ArrayList<Song> songs){
 
         double summation = 0.0;
         for(Song song : songs){
-
             summation += song.getLyrics().split("\\s+").length;
         }
 
         double avg = summation/songs.size();
         for(Song song : songs){
             avglength.put(song, avglength.get(song)/avg);
-
         }
     }
 }
