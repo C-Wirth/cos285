@@ -1,7 +1,7 @@
 
 /**
  * Colby Wirth
- * Version 30 October 2024
+ * Version 31 October 2024
  * Course: COS 285
  * MySearchEngine.java
  */
@@ -14,9 +14,14 @@ import java.util.TreeSet;
 
 public class MySearchEngine {
 
+    public static double CONSTANT_B = 0.75;
+    public static double CONSTANT_K_1 = 1.2;
+
+
     TreeMap<Song, TreeMap<String, Double>> tf;//term frequency
     TreeMap<String, Double> idf; //Inverse Document Frequency
     TreeMap<Song, Double> avglength; //avearge length of each song
+    double avgSongLength;
 
     /**
      * Generic constructor for a MySearchEngine
@@ -92,7 +97,7 @@ public class MySearchEngine {
      * This method populates a MySearchEngine's  avglength TreeMap<Song,Double> object
      * 
      * The keys is a set of all inputted Song objects from the Constructor
-     * The value is a double:  (# of lyrics)/(average length of a song)
+     * The value is a double:  (# of lyrics)/(average length of all song)
      * @param songs
      */
     public void calculateAvgLength(ArrayList<Song> songs){
@@ -102,9 +107,35 @@ public class MySearchEngine {
             summation += song.getLyrics().split("\\s+").length;
         }
 
-        double avg = summation/songs.size();
+        this.avgSongLength = summation/songs.size();
+        
         for(Song song : songs){
-            avglength.put(song, avglength.get(song)/avg);
+            avglength.put(song, avglength.get(song)/avgSongLength);
         }
     }
+
+    
+    public double calculateRelevance(Song song, String query){
+
+        String[] queryArray = query.split(" ");
+
+        double score = 0.0;
+
+        for(String word : queryArray){ //relevance equation
+
+            double idfVal = idf.get(word);
+
+            double tfVal = tf.get(song).get(word);
+
+            double songLength = song.getLyrics().split("\\s+").length;
+
+           double numerator = idfVal*tfVal*(CONSTANT_K_1+1.0);
+           double denominator =tfVal + (CONSTANT_K_1 * ((1.0-CONSTANT_B)+(CONSTANT_B*(songLength/avgSongLength))));
+
+           score+=(numerator/denominator);
+        }
+
+
+        return score;
+    } 
 }
