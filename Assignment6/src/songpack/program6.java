@@ -18,17 +18,26 @@ public class program6 {
     public static final String QUERY5 = "put your hands in the jupitersky";
         
     public static String filePath="src/song_lyrics.tsv";
-    public static final String GENRE = "rock";
+    public static  String genre = "rock";
 
     public static MySearchEngine engine ;
     
+        /**
+         * main method builds the index and makes queries
+         * @param args args[0] filepath/to/song_lyrics.tsv args[1] genre
+         * @throws IOException
+         */
         public static void main(String[] args) throws IOException{
     
             if(args.length != 0){
                 filePath = args[0];
             }
+            if(args.length == 2){
+                genre = args[1];
+            }
+
     
-            ArrayList<Song> songs = MyDataReader.readFileToArrayList(filePath, GENRE);
+            ArrayList<Song> songs = MyDataReader.readFileToArrayList(filePath, genre);
     
             //building the index
             long startTime = System.currentTimeMillis();
@@ -36,7 +45,6 @@ public class program6 {
             long endtime = System.currentTimeMillis() - startTime;
             System.out.println("\n" + endtime + " milliseconds to build the index");
     
-            //execute queries
             queryMaker(QUERY1);
             queryMaker(QUERY2);
             queryMaker(QUERY3);
@@ -44,13 +52,14 @@ public class program6 {
             queryMaker(QUERY5);
         }
 
+    /**
+     * helper method to execute queries and output times
+     * @param query the query to make
+     */
     private static void queryMaker(String query){
         long startTime = System.currentTimeMillis();
         engine.search(query);
         long endtime = System.currentTimeMillis() - startTime;
         System.out.println(endtime + " milliseconds to search for " + query);
     }
-
-    
-
 }

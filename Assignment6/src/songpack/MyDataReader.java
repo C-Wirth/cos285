@@ -68,7 +68,6 @@ public class MyDataReader {
      */
     public static ArrayList<Song> readFileToArrayList(String tsvFilePath, String tag) throws IOException
     {
-
         return readFileToBST(tsvFilePath, tag).toSortedArrayList();
 
         // ArrayList<Song> songAL = new ArrayList<>();
@@ -86,5 +85,7 @@ public class MyDataReader {
         //     }
         
         // return songAL;
+
+
         }
 }

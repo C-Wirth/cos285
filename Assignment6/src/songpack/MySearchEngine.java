@@ -15,6 +15,9 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+/**
+ * The MySearchEngine class encapsulats a BM25 model
+ */
 public final class MySearchEngine {
 
     public static double CONSTANT_B = 0.75;
@@ -81,11 +84,9 @@ public final class MySearchEngine {
                 idf.put(word, idf.getOrDefault(word, 0.0)+1);
             }
         }
-
         for(String lyric : idf.keySet()){ //now apply the idf function on each term in the idf TreeMap
 
             double nX = idf.get(lyric); //n(x) is the number of songs with the word
-
             double numerator = (songs.size() - nX + 0.5);
             double denominator = nX + 0.5;            
             double idfVal = Math.log((numerator/denominator)+1);
@@ -139,9 +140,7 @@ public final class MySearchEngine {
             if((idfVal == 0.0) || tf.get(song)==null || tf.get(song).get(word)==null) //control for null values
                 continue;                                                          //skip this iteration with 0 instances, 
                                                                                    //because numerator will always = 0
-
             double tfVal = tf.get(song).get(word);
-
             double songLength = song.getLyrics().split("\\s+").length;
 
            double numerator = idfVal*tfVal*(CONSTANT_K_1+1.0);
@@ -209,7 +208,7 @@ public final class MySearchEngine {
         int rank = 1;
         for(Map.Entry<Song, Double> entry: results){
         System.out.println(rank+": " + entry.getKey().getTitle() + " by " + entry.getKey().getArtist() + "\t"
-        + entry.getValue());
+        + String.format("%.2f", entry.getValue()));
         rank+=1;
         }
         }
