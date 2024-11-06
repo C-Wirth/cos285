@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  * Author: Colby Wirth 
- * Version: 1 November 2024 
+ * Version: 5 November 2024 
  * Course: COS 285 
  * Class: MyDataReader.java
  */
@@ -26,7 +26,7 @@ public class MyDataReader {
         String artist= items[2];
         int year= Integer.parseInt(items[3]);
         int views= Integer.parseInt(items[4]);
-        String lyrics= items[5];
+        String lyrics= items[5].toLowerCase();
         
         Song s = new Song(title, tag, artist, year, views, lyrics);
         return s;
@@ -66,26 +66,32 @@ public class MyDataReader {
      * @return ArrayList songs
      * @throws IOException
      */
-    public static ArrayList<Song> readFileToArrayList(String tsvFilePath, String tag) throws IOException
-    {
+    public static ArrayList<Song> readFileToArrayList(String tsvFilePath, String tag) throws IOException{
         return readFileToBST(tsvFilePath, tag).toSortedArrayList();
+    }
 
-        // ArrayList<Song> songAL = new ArrayList<>();
-        // int counter = 0;
-        // BufferedReader TSVReader = new BufferedReader(new FileReader(tsvFilePath));
-        //     String line = TSVReader.readLine();
-        //     while ((line = TSVReader.readLine()) != null) {   
-        //         Song song = MyDataReader.lineToReport(line);
-        //         if(song.getTag().equals(tag))
-        //         songAL.add(song);
-        //       counter+=1;
-        //       // using this to view progress
-        //       if(counter%50000==0)
-        //           System.out.println(counter + " records added");
-        //     }
-        
-        // return songAL;
-
-
-        }
+         /**
+     * This method takes in the tsv file path and returns the ArrrayList of songs with the given tag
+     * NOTE THIS METHOD IS ONLY CALLED WHEN A GENRE IS NOT INPUTTED
+     * @param tsvFilePath tsv file path
+     * @param tag one of the six tags: rap, rb, pop, rock, misc, and country
+     * @return ArrayList songs
+     * @throws IOException
+     */
+    public static ArrayList<Song> readFileToArrayList(String tsvFilePath) throws IOException
+    {
+        ArrayList<Song> songAL = new ArrayList<>();
+        int counter = 0;
+        BufferedReader TSVReader = new BufferedReader(new FileReader(tsvFilePath));
+            String line = TSVReader.readLine();
+            while ((line = TSVReader.readLine()) != null) {   
+                Song song = MyDataReader.lineToReport(line);
+                songAL.add(song);
+              counter+=1;
+              // using this to view progress
+              if(counter%50000==0)
+                  System.out.println(counter + " records added");
+            }
+        return songAL;
+    }
 }

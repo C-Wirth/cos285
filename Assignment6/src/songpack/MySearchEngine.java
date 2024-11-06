@@ -1,7 +1,7 @@
 
 /**
  * Colby Wirth
- * Version 1 November 2024
+ * Version 5 November 2024
  * Course: COS 285
  * MySearchEngine.java
  */
@@ -211,5 +211,5 @@ public final class MySearchEngine {
         + String.format("%.2f", entry.getValue()));
         rank+=1;
         }
-        }
+    }
 }

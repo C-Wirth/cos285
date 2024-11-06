@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 /**
  * Colby Wirth
- * Version 1 November 2024
+ * Version 5 November 2024
  * Dr. Berhrooz Mansouri
- * program 6
+ * program6
  */
 public class program6 {
 
@@ -36,15 +36,19 @@ public class program6 {
                 genre = args[1];
             }
 
-    
             ArrayList<Song> songs = MyDataReader.readFileToArrayList(filePath, genre);
-    
+            // overloaded method to build the searchengine with ALL songs from song_lyrics.tsv
+            // ArrayList<Song> songs = MyDataReader.readFileToArrayList(filePath); 
+
             //building the index
             long startTime = System.currentTimeMillis();
             engine = new MySearchEngine(songs);
             long endtime = System.currentTimeMillis() - startTime;
             System.out.println("\n" + endtime + " milliseconds to build the index");
-    
+            
+            songs=null; //attempting to free from heap space
+            System.gc();
+
             queryMaker(QUERY1);
             queryMaker(QUERY2);
             queryMaker(QUERY3);
