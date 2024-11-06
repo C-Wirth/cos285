@@ -63,7 +63,7 @@ public final class MySearchEngine {
             }
            tf.put(song, lyricCount);
         }
-        }
+    }
 
     /**
      * This method populates a MySearchEngine's TreeMap<String, Double> idf;
