@@ -1,7 +1,5 @@
 package songpack;
 
-import java.lang.classfile.components.ClassPrinter;
-
 /**
  * Author: Colby Wirth 
  * Version: 25 October 2024 
@@ -10,7 +8,7 @@ import java.lang.classfile.components.ClassPrinter;
  */
 public class AVLTree extends BinarySearchTree {
 
-    private int leftRotation, rightRotation, leftRightRotation, rightLeftRotation;
+    public int leftRotation, rightRotation, leftRightRotation, rightLeftRotation;
     public Node root;
 
     /**
@@ -31,7 +29,8 @@ public class AVLTree extends BinarySearchTree {
      * @param n
      */
     private void updateHeight(Node n){
-        n.height=1+Math.max(height(n.left),height(n.right));
+        if(n != null)
+            n.height=1+Math.max(height(n.left),height(n.right));
     }
 
     /**
@@ -50,23 +49,58 @@ public class AVLTree extends BinarySearchTree {
         updateHeight(root);
         updateHeight(replace);
 
+        leftRotation++;
+
         return replace; //the new root rode
     }
 
     private Node rightRotate(Node root){
 
-        System.out.println("Complete me");
+        Node replace = root.left;
+        Node replaceRight = replace.right;
 
-        return null;
+        replace.right = root;
+        root.left = replaceRight;
+
+        updateHeight(root);
+        updateHeight(replace);
+
+        return replace;
     }
 
-    public Node insert(Song data){
-
+    /**
+     * insert method, overrids BinarySearchTree's insert method
+     * @param data - the new song to insert
+     */
+    @Override
+    public void insert(Song data) {
+        root = insert(data, root);
     }
+    
+    /**
+     * Helper method to insert a node into the AVL tree recursively
+     * @param data
+     * @param node
+     * @return
+     */
+    private Node insert(Song data, Node node) {
 
-    private Node insert(Song data){
+        if (node == null) {
+            return new Node(data);
+        }
+    
+        if (data.compareTo(node.data) < 0) {
+            node.left = insert(data, node.left);
+        }
 
+        else {
+            node.right = insert(data, node.right);
+        }
+    
+        updateHeight(node);
+        return rebalance(node);
     }
+    
 
     /**
      * helper method that checks the balance factor of a Tree
@@ -87,6 +121,10 @@ public class AVLTree extends BinarySearchTree {
      * @return root the root node - after rebalancing the tree
      */
     private Node rebalance(Node root){
+
+
+        if(root == null)
+            return root;
         
         updateHeight(root);
         int bf = balanceFactor(root);
@@ -114,8 +152,7 @@ public class AVLTree extends BinarySearchTree {
         }
 
         //Right-Left Case
-        if(bf >1 & balanceFactor(root.right)>0){
-
+        if (bf > 1 && balanceFactor(root.right) < 0){
             rightLeftRotation+=1;
             root.right = rightRotate(root.right);
 
@@ -123,8 +160,5 @@ public class AVLTree extends BinarySearchTree {
         }
     
         return root;
-
     }
-    
-
 }

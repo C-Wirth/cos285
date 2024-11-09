@@ -51,8 +51,8 @@ public class MyDataReader {
                   songsBST.insert(song);
               counter+=1;
               // using this to view progress
-              if(counter%50000==0)
-                  System.out.println(counter + " records added");
+            //   if(counter%50000==0)
+            //       System.out.println(counter + " records added");
             }
         
         return songsBST;
@@ -94,4 +94,33 @@ public class MyDataReader {
             }
         return songAL;
     }
+
+   /**
+     * This method takes in the tsv file path and returns the binary search tree of songs with the given tag
+     * @param tsvFilePath tsv file path
+     * @param tag one of the six tags: rap, rb, pop, rock, misc, and country
+     * @return binary search tree of songs
+     * @throws IOException
+     */
+    public static AVLTree readFileToAVL(String tsvFilePath, String tag) throws IOException
+    {
+        AVLTree songsAVL= new AVLTree();
+        int counter = 0;
+        BufferedReader TSVReader = new BufferedReader(new FileReader(tsvFilePath));
+            String line = TSVReader.readLine();
+            while ((line = TSVReader.readLine()) != null) {   
+                Song song = MyDataReader.lineToReport(line);
+                if(song.getTag().equals(tag))
+                songsAVL.insert(song);
+              counter+=1;
+              // using this to view progress
+            //   if(counter%50000==0)
+            //       System.out.println(counter + " records added");
+            }
+        
+        return songsAVL;
+    }
+
+
+
 }

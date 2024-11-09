@@ -36,7 +36,7 @@ public class BinarySearchTree {
         }
     }
     /**
-     * Method retursns the height of a node
+     * Method returns the height of a node
      * @param N the input node
      * @return the height of a Node, an int
      */
@@ -132,6 +132,7 @@ public class BinarySearchTree {
                 else//if item  >= root
                     root.right = insert(item, root.right);
 
+                root.height = 1 + Math.max(height(root.left), height(root.right));
 
             return root;
             }
