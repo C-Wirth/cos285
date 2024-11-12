@@ -9,5 +9,4 @@
 import pandas as pd
 
 songs = pd.read_csv('src/song_lyrics.tsv', sep='\t')
-
 print(songs['views'].describe())

@@ -52,8 +52,9 @@ public class MyDataReader {
               counter+=1;
               // using this to view progress
             //   if(counter%50000==0)
-            //       System.out.println(counter + " records added");
             }
+            System.out.println(counter + " records added");
+
         
         return songsBST;
     }
@@ -117,6 +118,7 @@ public class MyDataReader {
             //   if(counter%50000==0)
             //       System.out.println(counter + " records added");
             }
+        System.out.println(counter + " records added");
         
         return songsAVL;
     }

@@ -95,9 +95,8 @@ public class AVLTree extends BinarySearchTree {
 
         else {
             node.right = insert(data, node.right);
-        }
-    
-        updateHeight(node);
+        }    
+        updateHeight(node); //redundant - delete me and check if nothing breaks
         return rebalance(node);
     }
     
@@ -121,7 +120,6 @@ public class AVLTree extends BinarySearchTree {
      * @return root the root node - after rebalancing the tree
      */
     private Node rebalance(Node root){
-
 
         if(root == null)
             return root;

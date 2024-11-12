@@ -25,7 +25,7 @@ public class program7 {
         //default for testing - no inputted parameters
         String filePath = "src/song_lyrics.tsv";
         String[] tags = {"pop", "rock", "rap", "rb", "misc", "country"};
-        String tag = tags[4];
+        String tag = tags[0];
 
         //use inputted values instead of defaults
         if(args.length != 0){
