@@ -12,13 +12,14 @@ In this project you will find:
     
     -README.md
     -assignment7.pdf
+    -metrics.py
     
     -songpack
           AVLTtree.java
           BinarySearchTree.java
           MySearchEngine.java
           Song.java
-          program6.java
+          program7.java
 
     How to run program:
 
@@ -29,7 +30,7 @@ In this project you will find:
           java path/to/songpack/program5 <genre>
 
 About: 
-     This program takes a file of Songs and a specified genre type and executes the main method in program6.java
+     This program takes a file of Songs and a specified genre type and executes the main method in program7.java
 
 Example Output with 'pop' genre
 
