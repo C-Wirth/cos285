@@ -6,13 +6,12 @@ import java.util.ArrayList;
 /**
  * 
  * Author: Colby Wirth 
- * Version: 5 October 2024 
+ * Version: 20 November 2024 
  * Course: COS 285 
  * Class: program4.java
  */
 public class program4 {
 
-    // private static final String MY_FILE_PATH = "src/flights.csv";
     private static final MyDataReader DATA_READER = new MyDataReader();
 
    /** 
@@ -20,18 +19,18 @@ public class program4 {
     */
     public static void main(String[] args) throws IOException{
 
-        String filePath = args[0];
-        String state = args[1];
-        String airport = args[2];
+            //Default values if non are passed into args - so the program will always compile
+            String filePath = "src/flights.csv";
+            String state = "ME";
+            String airport = "PWM";
+
+        if (args.length !=0){
+            filePath = args[0];
+            state = args[1];
+            airport = args[2];
+        }
 
         simRunner(airport, state, filePath);
-
-        // simRunner("PWM", "ME", MY_FILE_PATH);
-        // simRunner("BGR", "ME", MY_FILE_PATH);
-        // simRunner("AUG", "ME", MY_FILE_PATH);
-        // simRunner("LGA", "NY", MY_FILE_PATH);
-        // simRunner("JFK", "NY", MY_FILE_PATH);
-
     }
 
     /**
