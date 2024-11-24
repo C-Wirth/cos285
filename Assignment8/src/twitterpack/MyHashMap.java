@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Author: Colby Wirth 
- * Version: 25 October 2024 
+ * Version: 24 November 2024 
  * Course: COS 285 
  * Class: MyHashMap.java
  */
@@ -21,6 +21,7 @@ public class MyHashMap<K,V> implements Iterable<K> {
     private int tableSize;
     private int threshold; //LOAD_FACTOR * table.length
     private int resizeCount;
+    private HashSet<K> keySet = null;
 
 
     @SuppressWarnings("unchecked")
@@ -32,11 +33,12 @@ public class MyHashMap<K,V> implements Iterable<K> {
         table = (LinkedList<MyEntry<K, V>>[]) new LinkedList[tableSize];
         threshold = (int) (table.length * LOAD_FACTOR);
         resizeCount = 0;
+        keySet = new HashSet<>();
     }
 
     /**
      * Inner class encapsulated by MyHashMap
-     * Each entry has a key, value pair
+     * Each entry has a key-value pair
      */
     @SuppressWarnings("hiding")
     protected class MyEntry<K,V>{
@@ -45,7 +47,7 @@ public class MyHashMap<K,V> implements Iterable<K> {
         V value;
 
         /**
-         * Generic constructor for key, value pairs
+         * Generic constructor for MyEntry pairs
          * @param key
          * @param value
          */
@@ -57,13 +59,13 @@ public class MyHashMap<K,V> implements Iterable<K> {
     }
 
     /**
-     * Return the index that an entry belongs
+     * hash a key with Java's hashing function 'hashCode()'
      * @param key
-     * @return
+     * @return the hashed index
      */
     private int indexFor(K key){
         int hash = key.hashCode();
-        int index = hash &(tableSize-1);
+        int index = hash &(tableSize-1); //bitwise '&'' (modulo) operation
         return index;
     }
 
@@ -78,19 +80,19 @@ public class MyHashMap<K,V> implements Iterable<K> {
         if(table[index] == null)
                 table[index] = new LinkedList<>();
         
-        for(MyEntry<K,V> entry : table[index]){ 
+        for(MyEntry<K,V> entry : table[index]){  //update existing key-value pair if present
 
             if(entry.key.equals(key)){
                 entry.value = value;
                 return;
             }
         }
-        table[index].add(new MyEntry<>(key,value));
+        table[index].add(new MyEntry<>(key,value)); //key not found, add to k-v pair to the end of the LinkedList
         size++;
-        if(size > threshold)
-            resize();
-        
+        keySet.add(key);
 
+        if(size >= threshold)
+            resize();
     }
 
     /**
@@ -110,12 +112,11 @@ public class MyHashMap<K,V> implements Iterable<K> {
                     return entry.value; 
             }
         }
-
         return null;
     }
 
     /**
-     * resizes the underlying 'table' array by a factor of two when threshold is  met or exceeded
+     * resizes the underlying 'table' array by a factor of two when threshold is met or exceeded
      */
     @SuppressWarnings("unchecked")
     private void resize(){
@@ -139,38 +140,25 @@ public class MyHashMap<K,V> implements Iterable<K> {
     }
 
     /**
-     * A getOrDefault method implemented to better aid operations
-     * @param key
-     * @return V if key exists, null if key is not in the map
+     * A getOrDefault - gets a value, if value is null return the defaultValue from parameters
+     * @param key the inputted key
+     * @param defaultValue the value to return is key is not found
+     * @return V if key exists return the return the associated value - if key is not in the map return null
      */
     public V getOrDefault(K key, V defaultValue){
 
         if (this.get(key) != null) //map contains key - return the value
             return this.get(key);
-            
         else 
             return defaultValue; 
     }
 
     /**
-     * Get a standard ketset
-     * @return
+     * Get a ketset
+     * @return HashSet<K> the keyset
      */
     public HashSet<K> keySet(){
-        HashSet<K> keys = new HashSet<>();
-
-        for(LinkedList<MyEntry<K, V>> tableIndex : table){ //iterate through each index in the old table
-            if(tableIndex == null)
-                continue;
-            
-            for(MyEntry<K, V> entry : tableIndex){ //iterate through each LL at each index in the old table
-                if(entry != null)
-                    keys.add(entry.key);
-            }      
-        }
-        System.out.println("returning now from keyset() func");
-        return keys;
-
+        return this.keySet;
     }
     
     /**
@@ -209,34 +197,17 @@ public class MyHashMap<K,V> implements Iterable<K> {
         }
 
         /**
-         * helper method for constructor and next method to iterate nextIndex to the next index with a valid LinkedList in the table
-         */
-        private void getNextValidIndex() {
-
-            while (nextIndex < tableSize) {
-                if (table[nextIndex] != null) { // check for  a LinkedList with entries
-                    keyIterator = table[nextIndex].iterator();
-                    if (keyIterator.hasNext()) {
-                        return; // Found a valid LinkedList to iterate on
-                    }
-                }
-                nextIndex++; //nothing found at previous index, move to next index in table
-            }
-            keyIterator = null; // reset keyIterator
-        }
-
-        /**
-         * Standard has next method 
-         * @return false if the iterator is at the end of the table, true elsewise
+         * hasNext() method 
+         * @return false is there are no more elements to parse - true elsewise
          * 
          */
         @Override
         public boolean hasNext(){
-            return (keyIterator.hasNext() && keyIterator != null)|| nextIndex < tableSize;
+            return (keyIterator != null && keyIterator.hasNext()) || nextIndex < tableSize;
         }
 
         /**
-         * find the next key in the table 
+         * This method finds the next key in the table 
          * @return K a key from the LinkedList
          */
         @Override
@@ -257,6 +228,23 @@ public class MyHashMap<K,V> implements Iterable<K> {
                     throw new NoSuchElementException(); //iterated through the last empty indices and is at the end of the table
             }
             return lastRet;
+        }
+
+         /**
+         * helper method for constructor and next() method to iterate nextIndex to the next index with a valid LinkedList in the table
+         */
+        private void getNextValidIndex() {
+
+            while (nextIndex < tableSize) {
+                if (table[nextIndex] != null) {
+                    keyIterator = table[nextIndex].iterator();
+                    if (keyIterator.hasNext()) {
+                        return; // Found a valid LinkedList to iterate on
+                    }
+                }
+                nextIndex++; //nothing found at previous index, move to next index in table
+            }
+            keyIterator = null; // reset keyIterator
         }
     }
 }

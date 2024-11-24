@@ -44,6 +44,8 @@ public class MyDataReader {
           if(counter%200000==0)
               System.out.println(counter + " records added");
         }
+        System.out.println("\n --- \n");
+
         return hashMap;
     }
     

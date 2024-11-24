@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 /**
  * Author: Colby Wirth 
- * Version: 23 November 2024 
+ * Version: 24 November 2024 
  * Course: COS 285 
  * Class: MySentimentAnalysisModel.java
  */
@@ -39,10 +39,10 @@ public class MySentimentAnalysisModel {
 
         int i = 0 ;
 
-        for(Tweet key : trainData.keySet()){
+        for(Tweet key : trainData.keySet()){ //I implemented a keyset() method
             i++;
             addTweetToModel(key, trainData.get(key));
-            if(i % 50000 == 0 )
+            if(i % 250000 == 0 )
                 System.out.println(i + " elements added to the model");
             }
 
@@ -78,10 +78,9 @@ public class MySentimentAnalysisModel {
 
         tweet = Pattern.compile("[^a-zA-Z\\s]").matcher(tweet).replaceAll("");
 
-
         String[] words = (tweet.split(" "));
 
-        ArrayList<String> cleanedWords = new ArrayList<>(); //use another collection to avoid ConcurrentModificationException
+        ArrayList<String> cleanedWords = new ArrayList<>(words.length); //use another collection to avoid ConcurrentModificationException
 
         for(String word : words){
             if(!STOP_WORDS.contains(word))
@@ -93,18 +92,23 @@ public class MySentimentAnalysisModel {
      * this method reports the statistical scores of the MySentimentAnalysisModel object 
      * when tested against a test set
      * 
+     * the model's internal confusion matrix is updated for later retrieval
+     * 
      * @param testModel - the data to test the model against
-     * @return int[] ordered as [TP, TN, FP, FN]
+     * @return double - the accuracy score
      */
     public double testModel(MyHashMap<Tweet, Boolean> testData){
 
         confusionMatrix = new int[4];
 
+        int i = 0;
 
+        for(Tweet tweet : testData.keySet()){
 
-        for(Tweet tweet : testData){
+            i++;
 
-
+            if(i % 500000 == 0)
+                System.out.println(i + " entries tested");
 
             boolean actual_val = testData.get(tweet);
             boolean predict_val = sentimentPredictor(tweet);
@@ -121,15 +125,18 @@ public class MySentimentAnalysisModel {
             else // FN -false negative
                 confusionMatrix[3] += 1;
         }
+        System.out.println("\n --- \n");
+
         return getAccuracyScore();
     }
 
     /**
+     * Helper method for testModel()
      * this is the prediction function - trained with the data passed into the constructor 
      * @param the Tweet object
      * @return true if tweet is classified as positve - negative if tweet is classified as negative
      */
-    public boolean sentimentPredictor(Tweet tweet){
+    private boolean sentimentPredictor(Tweet tweet){
 
         String[] cleanedTweet = tweetCleaner(tweet.getText());
         int score =0;
@@ -153,12 +160,10 @@ public class MySentimentAnalysisModel {
 
         if(confusionMatrix == null)
             return (Double) null;
-            
-        return (confusionMatrix[0] + confusionMatrix[1])
-                /
-                (confusionMatrix[0] + confusionMatrix[1] + confusionMatrix[2] + confusionMatrix[3]);
-
-
+     
+        return(double) (confusionMatrix[0] + confusionMatrix[1])
+                        /
+                        (double) (confusionMatrix[0] + confusionMatrix[1] + confusionMatrix[2] + confusionMatrix[3]);
     }
 }
 

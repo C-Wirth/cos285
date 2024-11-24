@@ -4,14 +4,15 @@ import java.io.IOException;
 
 /**
  * Author: Colby Wirth 
- * Version: 23 November 2024 
+ * Version: 24 November 2024 
  * Course: COS 285 
  * Class: program8.java
  */
 public class program8 {
 
-    static String pathToTrainSet ="";
-    static String pathToTestSet="";
+    //default for testing - no inputted paths with args
+    static String pathToTrainSet = "src/data/tweets_train.tsv";
+    static String pathToTestSet = "src/data/tweets_test.tsv";
 
                 
     /**
@@ -31,17 +32,12 @@ public class program8 {
     }
     
         /**
-         * check the path - use default path values if args is not inputted
+         * check the path
          * @param args from main method
          */
         private static void checkPath(String[] args){
     
-            //default for testing - no inputted parameters
-            pathToTrainSet = "src/data/tweets_train.tsv";
-            pathToTestSet = "src/data/tweets_test.tsv";
-    
-            //use inputted values instead of defaults
-            if(args.length != 0){
+            if(args.length == 2){
                 pathToTrainSet = args[0];
                 pathToTestSet = args[1];
             }
