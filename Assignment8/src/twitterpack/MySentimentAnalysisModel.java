@@ -1,6 +1,5 @@
 package twitterpack;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -57,9 +56,13 @@ public class MySentimentAnalysisModel {
      */
     private void addTweetToModel(Tweet key, boolean isPositive){
 
-        String[] cleanedTweet = tweetCleaner(key.getText());
+        String cleanedText = Pattern.compile("[^a-zA-Z\\s]").matcher(key.getText()).replaceAll("");
+        String[] cleanedTweet = cleanedText.trim().split("\\s+");
 
         for(String word : cleanedTweet){
+
+            if(STOP_WORDS.contains(word)) //remove ant stop-words from the tweet
+                continue;
 
             if(isPositive)
                 positive.put(word, positive.getOrDefault(word, 0) + 1);
@@ -67,26 +70,6 @@ public class MySentimentAnalysisModel {
                 negative.put(word, negative.getOrDefault(word, 0) + 1);
         }
     }
-
-    /**
-     * helper method used my multiple methods
-     * cleans tweet with regex and removes stopwords
-     * @param tweet the String in a Tweet object that represents the text
-     * @return the cleaned tweet, an String[]
-     */
-    private String[] tweetCleaner(String tweet){
-
-        tweet = Pattern.compile("[^a-zA-Z\\s]").matcher(tweet).replaceAll("");
-
-        String[] words = (tweet.split(" "));
-
-        ArrayList<String> cleanedWords = new ArrayList<>(words.length); //use another collection to avoid ConcurrentModificationException
-
-        for(String word : words){
-            if(!STOP_WORDS.contains(word))
-            cleanedWords.add(word); //filter out stopwords and potential empty tweets
-        }
-        return cleanedWords.toArray(String[]::new);    }
     
     /**
      * this method reports the statistical scores of the MySentimentAnalysisModel object 
@@ -138,15 +121,15 @@ public class MySentimentAnalysisModel {
      */
     private boolean sentimentPredictor(Tweet tweet){
 
-        String[] cleanedTweet = tweetCleaner(tweet.getText());
+        String words = Pattern.compile("[^a-zA-Z\\s]").matcher(tweet.getText()).replaceAll("");
+        String[] cleanedTweet = (words.split("\\s+"));
+        
         int score =0;
-
         for(String word : cleanedTweet){
 
             score+= positive.getOrDefault(word, 0);
             score -= negative.getOrDefault(word, 0);
         }
-
         return score >=0;
 
     }

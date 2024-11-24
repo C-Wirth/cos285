@@ -14,7 +14,6 @@ import java.util.NoSuchElementException;
 public class MyHashMap<K,V> implements Iterable<K> {
 
     private static final Double LOAD_FACTOR = 0.75;
-
     private LinkedList<MyEntry<K, V>>[] table;
 
     private int size;
@@ -22,7 +21,6 @@ public class MyHashMap<K,V> implements Iterable<K> {
     private int threshold; //LOAD_FACTOR * table.length
     private int resizeCount;
     private HashSet<K> keySet = null;
-
 
     @SuppressWarnings("unchecked")
     /**
@@ -60,7 +58,7 @@ public class MyHashMap<K,V> implements Iterable<K> {
 
     /**
      * hash a key with Java's hashing function 'hashCode()'
-     * @param key
+     * @param key the new key
      * @return the hashed index
      */
     private int indexFor(K key){
@@ -116,6 +114,7 @@ public class MyHashMap<K,V> implements Iterable<K> {
     }
 
     /**
+     * helper method for put() method
      * resizes the underlying 'table' array by a factor of two when threshold is met or exceeded
      */
     @SuppressWarnings("unchecked")

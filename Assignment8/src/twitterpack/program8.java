@@ -53,12 +53,12 @@ public class program8 {
         public static MyHashMap<Tweet, Boolean> mapBuilder(String path, String mapName) throws IOException{
 
             long startTime = System.currentTimeMillis();
-            MyHashMap<Tweet, Boolean> map = MyDataReader.readDataToHashMap(path);
+            MyHashMap<Tweet, Boolean> map = MyDataReader.readDataToHashMap(path, mapName);
             long endTime = System.currentTimeMillis();
             long elapsedTime = endTime - startTime;
 
             System.out.println(elapsedTime + " milliseconds to build the " + mapName);
-            System.out.println(map.getResizes() + " resizng to build the " + mapName + "\n");
+            System.out.println(map.getResizes() + " resizing to build the " + mapName + "\n");
 
             return map;
         }

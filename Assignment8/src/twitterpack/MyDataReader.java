@@ -30,7 +30,7 @@ public class MyDataReader {
         return localDate;
     }
     
-    public static MyHashMap<Tweet, Boolean> readDataToHashMap(String filePath) throws IOException
+    public static MyHashMap<Tweet, Boolean> readDataToHashMap(String filePath, String dataName) throws IOException
     {
         MyHashMap<Tweet, Boolean>  hashMap = new MyHashMap<Tweet, Boolean> ();
         int counter=1;
@@ -42,10 +42,9 @@ public class MyDataReader {
           counter+=1;
           // using this to view progress
           if(counter%200000==0)
-              System.out.println(counter + " records added");
+            System.out.println(counter + " tweets added to " + dataName);
         }
-        System.out.println("\n --- \n");
-
+            System.out.println("\n --- \n");
         return hashMap;
     }
     
