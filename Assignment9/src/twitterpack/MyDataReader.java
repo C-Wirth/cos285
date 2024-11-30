@@ -31,24 +31,6 @@ public class MyDataReader {
         return localDate;
     }
     
-    public static MyHashMap<Tweet, Boolean> readDataToHashMap(String filePath, String dataName) throws IOException
-    {
-        MyHashMap<Tweet, Boolean>  hashMap = new MyHashMap<Tweet, Boolean> ();
-        int counter=1;
-        BufferedReader TSVReader = new BufferedReader(new FileReader(filePath));
-        String line = TSVReader.readLine();
-        while ((line = TSVReader.readLine()) != null) {   
-            Tweet tweet = MyDataReader.lineToReport(line);
-            hashMap.put(tweet, tweet.isSentimentPositive());;
-          counter+=1;
-          // using this to view progress
-          if(counter%200000==0)
-            System.out.println(counter + " tweets added to " + dataName);
-        }
-            System.out.println("\n --- \n");
-        return hashMap;
-    }
-    
     public static HashMap<String, MyHeap<Tweet>> readDataToHashMapHeaps(String filePath) throws IOException
     {
         HashMap<String, MyHeap<Tweet>>  hashMapHeaps = new HashMap<String, MyHeap<Tweet>>();

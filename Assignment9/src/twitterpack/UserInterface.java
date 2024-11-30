@@ -1,7 +1,12 @@
 package twitterpack;
 
 import java.util.Scanner;
-
+/**
+ * Author: Colby Wirth 
+ * Version: 30 November 2024 
+ * Course: COS 285 
+ * Class: program9.java
+ */
 public class UserInterface {
 
     MyHeap<Tweet> userHeap;
@@ -17,6 +22,10 @@ public class UserInterface {
         userHeap = program9.trainData.get(id);
     }
 
+    /**
+     * main driver method for UI
+     * @param args
+     */
     public static void main(String[] args){
 
         System.out.println("\n---\n\nEnter user ID");

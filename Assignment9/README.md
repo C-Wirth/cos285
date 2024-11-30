@@ -1,23 +1,23 @@
 Author: Colby Wirth
 
-Assignment: Assignment 8
+Assignment: Assignment 9
 
 Course: COS 285 Data Structures
 
 Instructor: Dr. Behrooz Mansouri
 
-Last Update: 24 November 2024
+Last Update: 30 November 2024
 
 In this project you will find: 
     
     -README.md
-    -cos 285 assignment8.pdf
+    -cos 285 assignment9.pdf
     -songpack
           MyDataReader.java
-          MyHashMap.java
-          MySentimentAnalysisModel.java
-          program8.java
+          MyHeap.java
+          program9.java
           Tweet.java
+          UserInterface.java
 
     How to run program:
 
@@ -25,40 +25,73 @@ In this project you will find:
      javac path/to/twitterpack/*
 
      After compiling ALL classes, run program8 class with the command: 
-          java path/to/program8 <path/to/tweets_train.tsv> <path/to/tweets_test.tsv>
+          java path/to/program89<path/to/tweets_train.tsv>
+     
+     Then, select from the UI menu (enter a number 1-4)
 
 About: 
-     This program trains a sentiment analysis model with custom Tweet objects.  Then it performs an analysis of the accuracy score.
+     This prorgram builds a HashMap where the key is a username, and the value is a min-heap with all of the user's tweets ordered from most recent.
 
-Example Output:
+     The UserInterface.java class enables a user to interact with their tweets, and view other users tweets
 
-200000 tweets added to train hash map
-400000 tweets added to train hash map
-600000 tweets added to train hash map
-800000 tweets added to train hash map
-1000000 tweets added to train hash map
-1200000 tweets added to train hash map
-1400000 tweets added to train hash map
+Example Interaction:
 
- --- 
+200000 records added
+400000 records added
+600000 records added
+800000 records added
+1000000 records added
+1200000 records added
+1400000 records added
+1969 milliseconds to build the Hashmap of Heaps
 
-1551 milliseconds to build the train hash map
-17 resizing to build the train hash map
+---
 
+Enter user ID
+_TheSpecialOne_
 
- --- 
+---
+Choose action (enter a number 1-4):
+1. View your most recent tweet
+2. Delete your most recent tweet
+3.View another user's tweet
+4.Sign out
+---
 
-99 milliseconds to build the test hash map
-13 resizing to build the test hash map
+1
+@switchfoot http://twitpic.com/2y1zl - Awww, that's a bummer. You shoulda got David Carr of Third Day to do it. ;D
 
-250000 elements added to the model
-500000 elements added to the model
-750000 elements added to the model
-1000000 elements added to the model
-1250000 elements added to the model
-1500000 elements added to the model
+---
+Choose action (enter a number 1-4):
+1. View your most recent tweet
+2. Delete your most recent tweet
+3.View another user's tweet
+4.Sign out
+---
 
- --- 
+2
+Last Tweet successfully deleted.
 
-Ratio of correct predictions: 0.6273125
+---
+Choose action (enter a number 1-4):
+1. View your most recent tweet
+2. Delete your most recent tweet
+3.View another user's tweet
+4.Sign out
+---
 
+3
+Enter the user ID that you want to view.
+scotthamilton
+is upset that he can't update his Facebook by texting it... and might cry as a result School today also. Blah!
+
+---
+Choose action (enter a number 1-4):
+1. View your most recent tweet
+2. Delete your most recent tweet
+3.View another user's tweet
+4.Sign out
+---
+
+4
+User Requested sign-out.

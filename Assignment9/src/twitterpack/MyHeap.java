@@ -22,7 +22,6 @@ public class MyHeap<T extends Comparable<T>> {
     public MyHeap(){
         this.heap = (T[]) new Comparable[10];
         size = 0;
-
     }
 
     /**
@@ -39,14 +38,18 @@ public class MyHeap<T extends Comparable<T>> {
         heapifyUp();
     }
 
+    /**
+     * resize helper method for doubling the size of the array for the MyHeap
+     */
     private void resize(){
+        @SuppressWarnings("unchecked")
         T[] newHeap = (T[]) new Comparable[heap.length * 2];
         System.arraycopy(heap, 0, newHeap, 0, heap.length);
         heap = newHeap;
     }
 
     /**
-     * This method heapifies a heap after adding an element comparator (min heap)
+     * helper method reorganizes a heap after adding an element
      */
     private void heapifyUp(){
 
@@ -101,7 +104,7 @@ public class MyHeap<T extends Comparable<T>> {
     }
 
     /**
-     * swap elements iteratively
+     * helper method for delete method, adds to last element to the top and reorganizes 
      */
     private void heapifyDown(){
 
@@ -131,7 +134,6 @@ public class MyHeap<T extends Comparable<T>> {
      * @param p parent index
      * @param c child index
      */
-    @SuppressWarnings("unchecked")
     public void swap(int p, int c){
         T temp = heap[p]; 
         heap[p] = heap[c];
