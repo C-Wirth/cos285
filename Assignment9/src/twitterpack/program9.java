@@ -16,9 +16,6 @@ public class program9 {
     static String pathToTestSet = "src/data/tweets_test.tsv";
 
     static HashMap<String, MyHeap<Tweet>> trainData;
-    
-        
-    
                     
         /**
         * Main method runs exercises for Assigment 8
@@ -30,9 +27,6 @@ public class program9 {
             trainData = mapBuilder(pathToTrainSet);
         
         UserInterface.main(null);
-
-        
-
     }
     
         /**

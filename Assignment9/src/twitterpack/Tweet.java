@@ -98,5 +98,10 @@ public class Tweet implements Comparable<Tweet>{
     public int compareTo(Tweet otherTweet) {
         return this.postDateTime.compareTo(otherTweet.getPostDateTime());
     }
+
+    @Override
+    public String toString() {
+        return this.text;
+    }
     
 }

@@ -19,7 +19,7 @@ public class UserInterface {
 
     public static void main(String[] args){
 
-        System.out.println("Enter user ID");
+        System.out.println("\n---\n\nEnter user ID");
         
         try (Scanner scanner = new Scanner(System.in)) {
             String id = scanner.nextLine();
@@ -74,7 +74,7 @@ public class UserInterface {
                     case "4" ->{
 
                         System.out.println("User Requested sign-out.");
-                        break; //break the while loop
+                        return;
                     }
                     default ->{
                         System.out.println("Invalid option.  Try again");
