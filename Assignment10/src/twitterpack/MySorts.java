@@ -19,6 +19,13 @@ public class MySorts {
         System.out.print(Arrays.toString(array));
     }
 
+    /**
+     * quicksort method
+     * @param <T> generic type
+     * @param array the input array
+     * @param lo low point for recusion
+     * @param hi high point for recusion
+     */
     public static <T extends Comparable<T>> void quickSort(T[] array, int lo, int hi) {
 
         if (lo >= hi) //recursive base case
