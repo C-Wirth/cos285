@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 
 public class MyDataReader {
     //  Create a formatter with the specific date-time format
@@ -31,27 +30,27 @@ public class MyDataReader {
         return localDate;
     }
     
-    public static HashMap<String, MyHeap<Tweet>> readDataToHashMapHeaps(String filePath) throws IOException
-    {
-        HashMap<String, MyHeap<Tweet>>  hashMapHeaps = new HashMap<String, MyHeap<Tweet>>();
-        int counter=1;
-        BufferedReader TSVReader = new BufferedReader(new FileReader(filePath));
-        String line = TSVReader.readLine();
-        while ((line = TSVReader.readLine()) != null) {   
-            Tweet tweet = MyDataReader.lineToReport(line);
-            MyHeap<Tweet> heap = hashMapHeaps.get(tweet.getUserID());
-            if (heap == null) {
-                heap = new MyHeap<Tweet> ();
-                hashMapHeaps.put(tweet.getUserID(), heap);
-            }
-            heap.add(tweet);
-          counter+=1;
-          // using this to view progress
-          if(counter%200000==0)
-              System.out.println(counter + " records added");
-        }
-        return hashMapHeaps;
-    }
+    // public static HashMap<String, MyHeap<Tweet>> readDataToHashMapHeaps(String filePath) throws IOException
+    // {
+    //     HashMap<String, MyHeap<Tweet>>  hashMapHeaps = new HashMap<String, MyHeap<Tweet>>();
+    //     int counter=1;
+    //     BufferedReader TSVReader = new BufferedReader(new FileReader(filePath));
+    //     String line = TSVReader.readLine();
+    //     while ((line = TSVReader.readLine()) != null) {   
+    //         Tweet tweet = MyDataReader.lineToReport(line);
+    //         MyHeap<Tweet> heap = hashMapHeaps.get(tweet.getUserID());
+    //         if (heap == null) {
+    //             heap = new MyHeap<Tweet> ();
+    //             hashMapHeaps.put(tweet.getUserID(), heap);
+    //         }
+    //         heap.add(tweet);
+    //       counter+=1;
+    //       // using this to view progress
+    //       if(counter%200000==0)
+    //           System.out.println(counter + " records added");
+    //     }
+    //     return hashMapHeaps;
+    // }
     
     
 
