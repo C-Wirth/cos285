@@ -1,8 +1,14 @@
+package twitterpack;
 
 import java.util.Arrays;
 import java.util.Random;
 
-
+/**
+ * Colby Wirth
+ * COS 285
+ * Version: 8 December 2024
+ * This class implements Radix Sort and Merge Sort for Tweet objecct
+ */
 public class MySorts {
 
     public static void main(String[] args){
@@ -43,6 +49,10 @@ public class MySorts {
         }   
     }
 
+    /**
+     * Standard merge sort method
+     * @param array the inputted array to be sorted
+     */
     public static void mergeSort(int[] array){
         if(array.length <= 1)
             return;
@@ -60,6 +70,12 @@ public class MySorts {
         merge(array,left,right);
     }
 
+    /**
+     * helper method for merge sort - merges the split subarrays
+     * @param array the current subarray to be merged 
+     * @param left the left sub array
+     * @param right the  the right sub array
+     */
     private static void merge(int[] array, int[] left, int[] right){
 
         int leftPointer = 0;
@@ -89,7 +105,11 @@ public class MySorts {
                 rightPointer++;
                 i++;
             }
-            }
+        }
+    }
+
+
+    public static void radixSort(Tweet[]){
     }
 
     public static void printArray(int[] input){
