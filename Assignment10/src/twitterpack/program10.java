@@ -24,12 +24,27 @@ public class program10 {
             checkPath(args);
             tweets = MyDataReader.readDataToArray(pathToTestSet,80000);
 
-            MySorts.mergeSort(tweets);
-
-            for(int i = 0 ; i < 10 ; i++)
-                System.out.println(tweets[i].getPostDateTime());
+            analysis1();
+            // analysis2();
+            // analysis3();
         
     }
+
+        public static void analysis1(){
+            long startTime = System.currentTimeMillis();
+            MySorts.quickSort(tweets);
+            long endTime = System.currentTimeMillis();
+            long totalTime  = endTime-startTime;
+            System.out.println(totalTime + " milliseconds for quicksort 1 based on date time");
+            
+            startTime = System.currentTimeMillis();
+            MySorts.quickSort(tweets);
+            endTime = System.currentTimeMillis();
+            totalTime  = endTime-startTime;
+            System.out.println(totalTime + " milliseconds for quicksort 2 based on date time");
+
+
+        }
     
         /**
          * check the path

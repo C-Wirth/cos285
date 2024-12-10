@@ -1,6 +1,7 @@
 package twitterpack;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Colby Wirth
@@ -9,24 +10,89 @@ import java.util.Arrays;
  * This class implements Radix Sort and Merge Sort for Tweet objecct
  */
 public class MySorts {
+    /**
+     * Comparator to comapre two Tweet objects by Id field -an int
+     */
+    public static class CompareByID implements Comparator<Tweet>{
 
-
-    public static void main(String[] args){
-        Integer[] array = {90,0,5,11,3,7,10,-500,500,10,0,12};
-
-        quickSort(array, 0, array.length-1);
-
-        System.out.print(Arrays.toString(array));
+        /**
+         * ovridden compare method based on ID
+         */
+        @Override
+        public int compare(Tweet tweet1, Tweet tweet2){
+            return tweet1.getId()-(tweet2.getId());
+        }
     }
 
     /**
-     * quicksort method
+     * Comparator to compare two Tweet objects by PostDateTime Field - a DateTime object
+     * @return -1,0,1
+     */
+    public static class ComparatorByTime implements Comparator<Tweet> {
+
+        /**
+         * overidden compare method based on date time
+         */
+        @Override
+        public int compare(Tweet tweet1, Tweet tweet2){
+            return tweet1.getPostDateTime().compareTo(tweet2.getPostDateTime());
+        }
+    }
+
+    /**
+     * radix sort method - implemented with digit counts and running counts -instead of queues
+     * @param array the input array
+     * @param longestInt the size of the longest integer
+     * @return the 
+     */
+    public static void radixSort(Integer[] array, int longestInt){
+
+        Integer[] outputArray = new Integer[array.length];
+
+        for(int i=1, modFactor=10 ; i<= longestInt ;i++, modFactor*=10){ //
+            int[] digitCounts = new int[10];
+            int[] runningCounts = new int[10];
+
+            for(Integer element : array){ //populate digitCounts
+                int digit = (element % modFactor)/(modFactor/10);  // Extract the current digit
+                digitCounts[digit]++; //always update digit count
+            }
+
+            runningCounts[0] = 0;
+            for(int j = 1; j < 10 ; j++){ //update running counts
+                runningCounts[j] = runningCounts[j-1]+digitCounts[j-1];
+            }
+
+            for (int j = 0; j < array.length; j++) {  // build the new array
+                int curDigit = (array[j] % modFactor)/(modFactor/10);
+                int curIndex = runningCounts[curDigit];
+                outputArray[curIndex] = array[j];// fill the new updated array
+                runningCounts[curDigit]++;
+            }
+
+            System.arraycopy(outputArray, 0, array, 0, array.length); // keep the outputArray stored in the original array
+        }
+    }
+
+
+    /**
+     * quicksort method driver
+     * @param <T> generic type
+     * @param array input array
+     */
+    public static <T extends Comparable<T>> void quickSort(T[] array) {
+        quickSort(array, 0, array.length-1);
+    }
+
+
+    /**
+     * quicksort main logic 
      * @param <T> generic type
      * @param array the input array
      * @param lo low point for recusion
      * @param hi high point for recusion
      */
-    public static <T extends Comparable<T>> void quickSort(T[] array, int lo, int hi) {
+    private static <T extends Comparable<T>> void quickSort(T[] array, int lo, int hi) {
 
         if (lo >= hi) //recursive base case
             return;
