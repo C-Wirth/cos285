@@ -4,7 +4,7 @@ import java.io.IOException;
 
 /**
  * Author: Colby Wirth 
- * Version: 8 December 2024 
+ * Version: 10 December 2024 
  * Course: COS 285 
  * Class: program10.java
  */
@@ -26,9 +26,12 @@ public class program10 {
             analysis1();
             analysis2();
             analysis3();
-        
     }
 
+        /**
+         * The process for analysis part 1
+         * @throws IOException
+         */
         public static void analysis1() throws IOException{
 
             tweets = MyDataReader.readDataToArray(pathToTestSet,80000);
@@ -47,6 +50,11 @@ public class program10 {
             System.out.println(totalTime + " milliseconds for quicksort 2 based on date time\n");
         }
 
+
+        /**
+         * The process for analysis part 2
+         * @throws IOException
+         */
         public static void analysis2(){
 
             MySorts.CompareByID c = new MySorts.CompareByID();
@@ -60,10 +68,18 @@ public class program10 {
             System.out.println("Top 10 Results:");
 
             for(int i = 0 ; i < 10 ; i ++){
-                System.out.println("" + (i+1) +": " + tweets[i] + " --- date: " + tweets[i].getPostDateTime());
+                System.out.println("ID: " + tweets[i].getId() + " --- date: " + tweets[i].getPostDateTime());
             }
             System.out.println("");
+
+            
         }
+
+
+        /**
+         * The process for analysis part 3
+         * @throws IOException
+         */
         public static void analysis3() throws IOException{
 
                 final int ID_LENGTH = 7;
@@ -77,6 +93,8 @@ public class program10 {
                 long totalTime  = endTime-startTime;
                 System.out.println(totalTime + " milliseconds for quicksort based on tweet ID");
 
+
+                tweets = MyDataReader.readDataToArray(pathToTestSet,80000);
                 startTime = System.currentTimeMillis();
                 MySorts.radixSort(tweets, ID_LENGTH);
                 endTime = System.currentTimeMillis();

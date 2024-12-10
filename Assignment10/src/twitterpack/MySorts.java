@@ -4,46 +4,27 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
+ * 
  * Colby Wirth
  * COS 285
- * Version: 8 December 2024
- * This class implements Radix Sort and Merge Sort for Tweet objecct
+ * Version: 10 December 2024
+ * This class implements Radix Sort and Quick Sort, and Merge Sort
+ * 
+ * Radix Sort: Only Implemented for custom Tweet objects - sorts by ID only - ID is an Integer
+ * Quick Sort: Implemented for generic types, T.  - sorts by a Comparator
+ * Mege Sort: Implemented for generic type, T. - uses intrensic .compareTo() to make all comparison
+ * 
+ * Comparators:
+ * CompareByID - compares two custom Tweet objects by ID - an Integer
+ * ComparatorByTime - compares two custom Tweet objects by it's LocalDateTime object field --- native to Java
+ * 
  */
 public class MySorts {
-    /**
-     * Comparator to comapre two Tweet objects by Id field -an int
-     */
-    public static class CompareByID implements Comparator<Tweet>{
-
-        /**
-         * ovridden compare method based on ID
-         */
-        @Override
-        public int compare(Tweet tweet1, Tweet tweet2){
-            return tweet1.getId()-(tweet2.getId());
-        }
-    }
-
-    /**
-     * Comparator to compare two Tweet objects by PostDateTime Field - a DateTime object
-     * @return -1,0,1
-     */
-    public static class ComparatorByTime implements Comparator<Tweet> {
-
-        /**
-         * overidden compare method based on date time
-         */
-        @Override
-        public int compare(Tweet tweet1, Tweet tweet2){
-            return tweet1.getPostDateTime().compareTo(tweet2.getPostDateTime());
-        }
-    }
 
     /**
      * radix sort method - implemented with digit counts and running counts -instead of queues
      * @param array the input array
      * @param longestInt the size of the longest integer
-     * @return the 
      */
     public static void radixSort(Tweet[] array, int longestInt){
 
@@ -63,17 +44,16 @@ public class MySorts {
                 runningCounts[j] = runningCounts[j-1]+digitCounts[j-1];
             }
 
-            for (int j = 0; j < array.length; j++) {  // build the new array
-                int curDigit = (array[j].getId() % modFactor)/(modFactor/10);
+            for (Tweet tweet : array) {
+                int curDigit = (tweet.getId() % modFactor) / (modFactor/10);
                 int curIndex = runningCounts[curDigit];
-                outputArray[curIndex] = array[j];// fill the new updated array
+                outputArray[curIndex] = tweet; // fill the new updated array
                 runningCounts[curDigit]++;
             }
 
             System.arraycopy(outputArray, 0, array, 0, array.length); // keep the outputArray stored in the original array
         }
     }
-
 
     /**
      * quicksort method driver
@@ -84,9 +64,8 @@ public class MySorts {
         quickSort(array, 0, array.length-1, comparator);
     }
 
-
     /**
-     * quicksort main logic 
+     * quicksort main rescursive logic 
      * @param <T> generic type
      * @param array the input array
      * @param lo low point for recusion
@@ -104,8 +83,6 @@ public class MySorts {
         quickSort(array, lo, pivotIndex - 1, comparator);
         quickSort(array, pivotIndex + 1, hi ,comparator); //right subarray
     }
-
-
 
     /**
      * this method gets the pivot point with the median of thee apprach
@@ -133,8 +110,7 @@ public class MySorts {
         return midPoint;
     }
 
-    @SuppressWarnings("unchecked")
-    private static <T> int partition(T[] array, int pivotIndex, int lo, int hi, Comparator comparator){
+    private static <T> int partition(T[] array, int pivotIndex, int lo, int hi, Comparator<T> comparator){
 
         T pivot = array[pivotIndex];
         swapElement(array,lo,pivotIndex);
@@ -142,12 +118,12 @@ public class MySorts {
         int j = hi; //hi pointer
 
 
-        while(true){ //main logic - walk l and h indices towards each other and make swaps to put values < pivot on left and values > pivot on right
+        while(true){ //main logic - walk i and j indices towards each other and make swaps to put values < pivot on left and values > pivot on right
 
-            while (i <= j && comparator.compare(array[i], pivot) <= 0) //indices haven't crossed and the next index array[lo] <= pivot
+            while (i <= j && comparator.compare(array[i], pivot) <= 0) //indices haven't crossed and the next index array[i] <= pivot
                 i++;
             
-            while(i<= j && comparator.compare(array[j], pivot) > 0)//indices havent crossed and array[hi] > pivot
+            while(i<= j && comparator.compare(array[j], pivot) > 0)//indices havent crossed and array[j] > pivot
                 j--;
 
             if(i >= j)
@@ -234,6 +210,36 @@ public class MySorts {
                 rightPointer++;
                 i++;
             }
+        }
+    }
+
+        /**
+     * Comparator to comapre two Tweet objects by Id field -an int
+     * @return positive int: tweet1 ID > tweet 2 ID, negative int: tweet 1 ID = tweet 2 ID
+     */
+    public static class CompareByID implements Comparator<Tweet>{
+
+        /**
+         * ovridden compare method based on ID
+         */
+        @Override
+        public int compare(Tweet tweet1, Tweet tweet2){
+            return tweet1.getId()-(tweet2.getId());
+        }
+    }
+
+    /**
+     * Comparator to compare two Tweet objects by PostDateTime Field - a DateTime object
+     * @return -1,0,1
+     */
+    public static class ComparatorByTime implements Comparator<Tweet> {
+
+        /**
+         * overidden compare method based on date time
+         */
+        @Override
+        public int compare(Tweet tweet1, Tweet tweet2){
+            return tweet1.getPostDateTime().compareTo(tweet2.getPostDateTime());
         }
     }
 
