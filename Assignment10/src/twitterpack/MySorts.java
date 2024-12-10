@@ -80,8 +80,8 @@ public class MySorts {
      * @param <T> generic type
      * @param array input array
      */
-    public static <T extends Comparable<T>> void quickSort(T[] array) {
-        quickSort(array, 0, array.length-1);
+    public static <T extends Comparable<T>> void quickSort(T[] array, Comparator<T> comparator) {
+        quickSort(array, 0, array.length-1, comparator);
     }
 
 
@@ -92,17 +92,17 @@ public class MySorts {
      * @param lo low point for recusion
      * @param hi high point for recusion
      */
-    private static <T extends Comparable<T>> void quickSort(T[] array, int lo, int hi) {
+    private static <T> void quickSort(T[] array, int lo, int hi, Comparator<T> comparator) {
 
         if (lo >= hi) //recursive base case
             return;
 
-        int pivotIndex = medianOfThree(array,lo,hi);
+        int pivotIndex = medianOfThree(array,lo,hi, comparator);
 
-        pivotIndex = partition(array,pivotIndex,lo,hi);
+        pivotIndex = partition(array,pivotIndex,lo,hi, comparator);
 
-        quickSort(array, lo, pivotIndex - 1);
-        quickSort(array, pivotIndex + 1, hi); //right subarray
+        quickSort(array, lo, pivotIndex - 1, comparator);
+        quickSort(array, pivotIndex + 1, hi ,comparator); //right subarray
     }
 
 
@@ -112,28 +112,29 @@ public class MySorts {
      * @param array - the array to be sorted. lo - the low INDEX, hi, the high INDEX
      * @return the index of the median pivot point
      */
-    private static <T extends Comparable<T>> int medianOfThree(T[] array, int lo, int hi){
+    private static <T> int medianOfThree(T[] array, int lo, int hi, Comparator<T> comparator){
 
         if (hi - lo < 3) //skip median of three approach if there are less than three elements --- the method will never handle 1 or less elements
-            return array[lo].compareTo(array[hi]) > 0 ? hi : lo;
+            return comparator.compare(array[lo], array[hi]) > 0 ? hi : lo;
+
 
         int midPoint = lo + (hi - lo) / 2;
 
-        if (array[lo].compareTo(array[midPoint]) > 0 ){ // array[lo] < array[hiPoint]
+        if (comparator.compare(array[lo], array[midPoint]) > 0 ){ // array[lo] < array[hiPoint]
             swapElement(array, lo, midPoint);
         }
-        if (array[midPoint].compareTo(array[hi]) > 0){
+        if (comparator.compare(array[midPoint], array[hi])> 0 ){
             swapElement(array, midPoint, hi);
         }
-
-        if (array[lo].compareTo(array[midPoint]) > 0 ){
+        if (comparator.compare(array[lo], array[midPoint]) > 0 ){
             swapElement(array, lo, midPoint);
         }
         
         return midPoint;
     }
 
-    private static <T extends Comparable<T>> int partition(T[] array, int pivotIndex, int lo, int hi){
+    @SuppressWarnings("unchecked")
+    private static <T> int partition(T[] array, int pivotIndex, int lo, int hi, Comparator comparator){
 
         T pivot = array[pivotIndex];
         swapElement(array,lo,pivotIndex);
@@ -143,10 +144,10 @@ public class MySorts {
 
         while(true){ //main logic - walk l and h indices towards each other and make swaps to put values < pivot on left and values > pivot on right
 
-            while (i <= j && array[i].compareTo(pivot) <= 0) //indices haven't crossed and the next index array[lo] <= pivot
+            while (i <= j && comparator.compare(array[i], pivot) <= 0) //indices haven't crossed and the next index array[lo] <= pivot
                 i++;
             
-            while(i<= j && array[j].compareTo(pivot) >0) //indices havent crossed and array[hi] > pivot
+            while(i<= j && comparator.compare(array[j], pivot) > 0)//indices havent crossed and array[hi] > pivot
                 j--;
 
             if(i >= j)
@@ -164,7 +165,7 @@ public class MySorts {
      * helper method to handle element swapping
      * @param array - the array, i - the first element to be swapped, j the second element to be swapped
      */
-    private static  <T extends Comparable<T>> void swapElement(T[] array, int i, int j){
+    private static <T> void swapElement(T[] array, int i, int j){
         T temp = array[i];
         array[i] = array[j];
         array[j] = temp;

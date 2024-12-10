@@ -22,28 +22,65 @@ public class program10 {
         public static void main(String[] args) throws IOException{
     
             checkPath(args);
-            tweets = MyDataReader.readDataToArray(pathToTestSet,80000);
 
             analysis1();
-            // analysis2();
+            analysis2();
             // analysis3();
         
     }
 
-        public static void analysis1(){
+        public static void analysis1() throws IOException{
+
+            tweets = MyDataReader.readDataToArray(pathToTestSet,80000);
+            MySorts.ComparatorByTime c = new MySorts.ComparatorByTime();
+
             long startTime = System.currentTimeMillis();
-            MySorts.quickSort(tweets);
+            MySorts.quickSort(tweets,c);
             long endTime = System.currentTimeMillis();
             long totalTime  = endTime-startTime;
             System.out.println(totalTime + " milliseconds for quicksort 1 based on date time");
             
             startTime = System.currentTimeMillis();
-            MySorts.quickSort(tweets);
+            MySorts.quickSort(tweets,c);
             endTime = System.currentTimeMillis();
             totalTime  = endTime-startTime;
             System.out.println(totalTime + " milliseconds for quicksort 2 based on date time");
 
+        }
 
+        public static void analysis2(){
+
+            MySorts.CompareByID c = new MySorts.CompareByID();
+
+            long startTime = System.currentTimeMillis();
+            MySorts.quickSort(tweets, c);
+            long endTime = System.currentTimeMillis();
+            long totalTime  = endTime-startTime;
+
+            System.out.println(totalTime + " milliseconds for quicksort based on tweet ID ");
+            System.out.println("\nTop 10 Results:");
+
+            for(int i = 0 ; i < 10 ; i ++){
+                System.out.println("" + (i+1) +": " + tweets[i] + " --- date: " + tweets[i].getPostDateTime());
+            }
+        }
+        public static void analysis3() throws IOException{
+
+                tweets = MyDataReader.readDataToArray(pathToTestSet,80000);
+                MySorts.CompareByID c = new MySorts.CompareByID();
+
+                long startTime = System.currentTimeMillis();
+                MySorts.quickSort(tweets, c);
+                long endTime = System.currentTimeMillis();
+                long totalTime  = endTime-startTime;
+                System.out.println(totalTime + " milliseconds for quicksort based on tweet ID");
+
+                startTime = System.currentTimeMillis();
+                MySorts.radixSort(tweets, 7);
+                endTime = System.currentTimeMillis();
+                totalTime  = endTime-startTime;
+                System.out.println(totalTime + " milliseconds for quicksort 2 based on date time");
+                
         }
     
         /**
