@@ -71,8 +71,8 @@ public class MyDataReader {
           Tweet tweet = MyDataReader.lineToReport(line);
           tweets[counter++] = tweet;
           // using this to view progress
-          if(counter%20000==0)
-              System.out.println(counter + " records added");
+        //   if(counter%20000==0)
+        //       System.out.println(counter + " records added");
         }
         return tweets;
     }

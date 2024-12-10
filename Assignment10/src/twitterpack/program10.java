@@ -25,7 +25,7 @@ public class program10 {
 
             analysis1();
             analysis2();
-            // analysis3();
+            analysis3();
         
     }
 
@@ -44,8 +44,7 @@ public class program10 {
             MySorts.quickSort(tweets,c);
             endTime = System.currentTimeMillis();
             totalTime  = endTime-startTime;
-            System.out.println(totalTime + " milliseconds for quicksort 2 based on date time");
-
+            System.out.println(totalTime + " milliseconds for quicksort 2 based on date time\n");
         }
 
         public static void analysis2(){
@@ -58,13 +57,16 @@ public class program10 {
             long totalTime  = endTime-startTime;
 
             System.out.println(totalTime + " milliseconds for quicksort based on tweet ID ");
-            System.out.println("\nTop 10 Results:");
+            System.out.println("Top 10 Results:");
 
             for(int i = 0 ; i < 10 ; i ++){
                 System.out.println("" + (i+1) +": " + tweets[i] + " --- date: " + tweets[i].getPostDateTime());
             }
+            System.out.println("");
         }
         public static void analysis3() throws IOException{
+
+                final int ID_LENGTH = 7;
 
                 tweets = MyDataReader.readDataToArray(pathToTestSet,80000);
                 MySorts.CompareByID c = new MySorts.CompareByID();
@@ -76,10 +78,10 @@ public class program10 {
                 System.out.println(totalTime + " milliseconds for quicksort based on tweet ID");
 
                 startTime = System.currentTimeMillis();
-                MySorts.radixSort(tweets, 7);
+                MySorts.radixSort(tweets, ID_LENGTH);
                 endTime = System.currentTimeMillis();
                 totalTime  = endTime-startTime;
-                System.out.println(totalTime + " milliseconds for quicksort 2 based on date time");
+                System.out.println(totalTime + " milliseconds for radixsort based on tweet ID");
                 
         }
     

@@ -45,16 +45,16 @@ public class MySorts {
      * @param longestInt the size of the longest integer
      * @return the 
      */
-    public static void radixSort(Integer[] array, int longestInt){
+    public static void radixSort(Tweet[] array, int longestInt){
 
-        Integer[] outputArray = new Integer[array.length];
+        Tweet[] outputArray = new Tweet[array.length];
 
         for(int i=1, modFactor=10 ; i<= longestInt ;i++, modFactor*=10){ //
             int[] digitCounts = new int[10];
             int[] runningCounts = new int[10];
 
-            for(Integer element : array){ //populate digitCounts
-                int digit = (element % modFactor)/(modFactor/10);  // Extract the current digit
+            for(Tweet element : array){ //populate digitCounts
+                int digit = (element.getId() % modFactor)/(modFactor/10);  // Extract the current digit
                 digitCounts[digit]++; //always update digit count
             }
 
@@ -64,7 +64,7 @@ public class MySorts {
             }
 
             for (int j = 0; j < array.length; j++) {  // build the new array
-                int curDigit = (array[j] % modFactor)/(modFactor/10);
+                int curDigit = (array[j].getId() % modFactor)/(modFactor/10);
                 int curIndex = runningCounts[curDigit];
                 outputArray[curIndex] = array[j];// fill the new updated array
                 runningCounts[curDigit]++;
